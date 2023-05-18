@@ -1,5 +1,6 @@
-package com.lucete.template.info;
+package com.lucete.template.info.controller;
 
+import com.lucete.template.info.service.InfoService;
 import com.lucete.template.info.model.Project;
 import com.lucete.template.info.model.User;
 
