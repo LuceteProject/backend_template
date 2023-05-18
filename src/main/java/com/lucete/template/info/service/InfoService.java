@@ -1,9 +1,8 @@
-package com.lucete.template.info;
+package com.lucete.template.info.service;
 
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lucete.template.info.model.Project;
 import com.lucete.template.info.model.User;

@@ -29,11 +29,14 @@ public class UserRepository {
             User user = new User();
             user.setName(rs.getString("name"));
             user.setPhone(rs.getString("phone"));
-            user.setActive(rs.getInt("active"));
             user.setTeam(rs.getString("team"));
+            user.setPassword(rs.getString("password"));
+            user.setStatus(rs.getBoolean("status"));
+            user.setSemester(rs.getInt("semester"));
+            user.setTeam_code(rs.getInt("team_code"));
+            user.setPermission(rs.getInt("permission"));
             user.setCreated(rs.getDate("created"));
             user.setUpdated(rs.getDate("updated"));
-            user.setYear(rs.getInt("year"));
             return user;
         };
 
