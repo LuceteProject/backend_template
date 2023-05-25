@@ -1,19 +1,30 @@
 package com.lucete.template.info.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Board {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 20, nullable = false)
     private Integer category;
-    private String board_name;
-    private String board_discription;
+    @Column
+    private Integer header;
+    @Column(length = 20, nullable = false)
+    private String name;
+    @Column
+    private String discription;
+    @Column
     private Integer permission;
-    private Boolean is_notice;
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<Post> posts;
 }

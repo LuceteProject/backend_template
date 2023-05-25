@@ -1,15 +1,17 @@
 package com.lucete.template.info.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
 import java.util.Date;
 
 @Getter
 @Setter
 @ToString
 @Entity
+//생성자 어노테이션
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,4 +38,7 @@ public class User {
     private Date created;
     @Column
     private Date updated;
+    @Column(length = 250, nullable = true)
+    private String profile_message;
+
 }
