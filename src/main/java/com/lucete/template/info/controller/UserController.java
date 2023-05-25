@@ -5,6 +5,9 @@ import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.UsersRepository;
 import com.lucete.template.info.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 // 이 컨트롤러의 모든 엔드포인트의 기본 URL 경로는 "/user" 입니다.
-@RequestMapping("/users")
+@RequestMapping("api/v1/users")
 public class UserController {
     private final UserService userService;
 
@@ -44,6 +47,11 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @GetMapping
+    public Page<UserDTO> getAllUsers(@RequestParam(required = false, defaultValue = "0") int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return userService.getAllUsers(pageable);
     }
 }
 
