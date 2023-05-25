@@ -1,7 +1,11 @@
 package com.lucete.template.info.service;
 
+import com.lucete.template.info.DTO.BoardDTO;
+import com.lucete.template.info.config.ResourceNotFoundException;
 import com.lucete.template.info.model.Board;
 import com.lucete.template.info.repository.BoardRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,29 +14,39 @@ import java.util.List;
 @Service
 @Transactional
 public class BoardService {
-    private final BoardRepository boardRepository;
+    @Autowired
+    private BoardRepository boardRepository;
 
-    public BoardService(BoardRepository boardRepository) {
-        this.boardRepository = boardRepository;
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Transactional(readOnly = true)
+    public BoardDTO getBoardById(Long id) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Board", "id", id));
+        return modelMapper.map(board, BoardDTO.class);
     }
 
-    public Board addBoard(Board board) {
-        return boardRepository.save(board);
+    @Transactional
+    public BoardDTO createBoard(BoardDTO boardDto) {
+        Board board = modelMapper.map(boardDto, Board.class);
+        board = boardRepository.save(board);
+        return modelMapper.map(board, BoardDTO.class);
     }
 
-    public List<Board> getAllBoards() {
-        return boardRepository.findAll();
+    @Transactional
+    public BoardDTO updateBoard(Long id, BoardDTO boardDto) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Board", "id", id));
+        modelMapper.map(boardDto, board);
+        board = boardRepository.save(board);
+        return modelMapper.map(board, BoardDTO.class);
     }
 
-    public Board getBoardById(Long id) {
-        return boardRepository.findById(id).orElse(null);
-    }
-
-    public Board updateBoard(Board board) {
-        return boardRepository.save(board);
-    }
-
+    @Transactional
     public void deleteBoard(Long id) {
-        boardRepository.deleteById(id);
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Board", "id", id));
+        boardRepository.delete(board);
     }
 }

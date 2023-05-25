@@ -1,8 +1,11 @@
 package com.lucete.template.info.service;
 
 import com.lucete.template.info.DTO.UserDTO;
+import com.lucete.template.info.config.ResourceNotFoundException;
 import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.UsersRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,36 +16,38 @@ import java.util.Optional;
 @Transactional
 public class UserService {
     private final UsersRepository userRepository;
+    private final ModelMapper modelMapper;
 
-    public UserService(UsersRepository userRepository) {
+    @Autowired
+    public UserService(UsersRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public User addUser(User user) {
-        return userRepository.save(user);
-    }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
-
-    public User updateUser(User user) {
-        return userRepository.save(user);
-    }
-
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
-    }
-
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public UserDTO getUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User", "id", id));
+        return modelMapper.map(user, UserDTO.class);
     }
 
     public UserDTO createUser(UserDTO userDTO) {
-        return null;
+        User user = modelMapper.map(userDTO, User.class);
+        User savedUser = userRepository.save(user);
+        return modelMapper.map(savedUser, UserDTO.class);
+    }
+
+    public UserDTO updateUser(Long id, UserDTO userDTO) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User", "id", id));
+        modelMapper.map(userDTO, user);
+        User updatedUser = userRepository.save(user);
+        return modelMapper.map(updatedUser, UserDTO.class);
+    }
+
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User", "id", id));
+        userRepository.delete(user);
     }
 }

@@ -1,7 +1,11 @@
 package com.lucete.template.info.service;
 
+import com.lucete.template.info.DTO.PostDTO;
+import com.lucete.template.info.config.ResourceNotFoundException;
 import com.lucete.template.info.model.Post;
 import com.lucete.template.info.repository.PostRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,29 +14,40 @@ import java.util.List;
 @Service
 @Transactional
 public class PostService {
-    private final PostRepository postRepository;
 
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Transactional(readOnly = true)
+    public PostDTO getPostById(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        return modelMapper.map(post, PostDTO.class);
     }
 
-    public Post addPost(Post post) {
-        return postRepository.save(post);
+    @Transactional
+    public PostDTO createPost(PostDTO postDto) {
+        Post post = modelMapper.map(postDto, Post.class);
+        post = postRepository.save(post);
+        return modelMapper.map(post, PostDTO.class);
     }
 
-    public List<Post> getPostsByBoardId(Long boardId) {
-        return postRepository.findByBoardId(boardId);
+    @Transactional
+    public PostDTO updatePost(Long id, PostDTO postDto) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        modelMapper.map(postDto, post);
+        post = postRepository.save(post);
+        return modelMapper.map(post, PostDTO.class);
     }
 
-    public Post getPostById(Long id) {
-        return postRepository.findById(id).orElse(null);
-    }
-
-    public Post updatePost(Post post) {
-        return postRepository.save(post);
-    }
-
+    @Transactional
     public void deletePost(Long id) {
-        postRepository.deleteById(id);
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        postRepository.delete(post);
     }
 }

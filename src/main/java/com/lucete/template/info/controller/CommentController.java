@@ -1,5 +1,6 @@
 package com.lucete.template.info.controller;
 
+import com.lucete.template.info.DTO.CommentDTO;
 import com.lucete.template.info.model.Comment;
 import com.lucete.template.info.service.CommentService;
 import org.springframework.http.ResponseEntity;
@@ -16,26 +17,19 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/{postId}")
-    public List<Comment> getCommentsByPostId(@PathVariable Long postId) {
-        return commentService.getCommentsByPostId(postId);
-    }
-
-    @GetMapping("/comment/{id}")
-    public Comment getComment(@PathVariable Long id) {
-        return commentService.getCommentById(id);
-    }
-
     @PostMapping
-    public ResponseEntity<Comment> addComment(@RequestBody Comment newComment) {
-        Comment savedComment = commentService.addComment(newComment);
-        return ResponseEntity.ok(savedComment);
+    public CommentDTO createComment(@RequestBody CommentDTO commentDTO) {
+        return commentService.createComment(commentDTO);
+    }
+
+    @GetMapping("/{id}")
+    public CommentDTO getComment(@PathVariable Long id) {
+        return commentService.getComment(id);
     }
 
     @PutMapping("/{id}")
-    public Comment updateComment(@PathVariable Long id, @RequestBody Comment updatedComment) {
-        updatedComment.setId(id);
-        return commentService.updateComment(updatedComment);
+    public CommentDTO updateComment(@PathVariable Long id, @RequestBody CommentDTO commentDTO) {
+        return commentService.updateComment(id, commentDTO);
     }
 
     @DeleteMapping("/{id}")

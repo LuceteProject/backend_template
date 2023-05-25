@@ -5,6 +5,7 @@ import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.UsersRepository;
 import com.lucete.template.info.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 // 이 컨트롤러의 모든 엔드포인트의 기본 URL 경로는 "/user" 입니다.
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -21,31 +22,28 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+        UserDTO user = userService.getUser(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
         UserDTO createdUser = userService.createUser(userDTO);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        updatedUser.setId(id);
-        return userService.updateUser(updatedUser);
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        UserDTO updatedUser = userService.updateUser(id, userDTO);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
 
