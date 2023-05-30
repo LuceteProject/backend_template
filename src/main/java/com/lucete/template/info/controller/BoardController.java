@@ -1,9 +1,17 @@
 package com.lucete.template.info.controller;
 
 import com.lucete.template.info.DTO.BoardDTO;
+import com.lucete.template.info.DTO.PostDTO;
 import com.lucete.template.info.model.Board;
 import com.lucete.template.info.service.BoardService;
+import com.lucete.template.info.service.PostService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,28 +19,41 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/boards")
+@Tag(name = "boards", description = "게시판 API")
 public class BoardController {
     @Autowired
     private BoardService boardService;
-
+    private PostService postService;
     @GetMapping("/{id}")
+    @Operation(summary = "특정 게시판 정보 조회", description = "게시판 ID를 이용하여 게시판 정보를 조회합니다.")
     public ResponseEntity<BoardDTO> getBoardById(@PathVariable Long id) {
         return ResponseEntity.ok(boardService.getBoardById(id));
     }
 
     @PostMapping("/")
+    @Operation(summary = "새로운 게시판 생성", description = "새로운 게시판 정보를 입력하여 생성합니다.")
     public ResponseEntity<BoardDTO> createBoard(@RequestBody BoardDTO boardDto) {
         return ResponseEntity.ok(boardService.createBoard(boardDto));
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "게시판 정보 수정", description = "게시판 ID를 이용하여 기존 게시판 정보를 수정합니다.")
     public ResponseEntity<BoardDTO> updateBoard(@PathVariable Long id, @RequestBody BoardDTO boardDto) {
         return ResponseEntity.ok(boardService.updateBoard(id, boardDto));
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "게시판 삭제", description = "게시판 ID를 이용하여 게시판 정보를 삭제합니다.")
     public ResponseEntity<?> deleteBoard(@PathVariable Long id) {
         boardService.deleteBoard(id);
         return ResponseEntity.ok().build();
     }
+    @GetMapping
+    @Operation(summary = "모든 게시판 정보 조회", description = "페이징 기능을 이용하여 모든 게시판 정보를 조회합니다.")
+    public Page<BoardDTO> getAllPosts(@RequestParam(required = false, defaultValue = "0") int page,
+                                     @RequestParam(required = false, defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return boardService.getAllPosts(pageable);
+    }
+
 }
