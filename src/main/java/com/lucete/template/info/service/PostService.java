@@ -6,10 +6,13 @@ import com.lucete.template.info.model.Post;
 import com.lucete.template.info.repository.PostRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -50,4 +53,16 @@ public class PostService {
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
         postRepository.delete(post);
     }
+
+    public Page<PostDTO> getAllPosts(Pageable pageable) {
+        return postRepository.findAll(pageable).map(post -> modelMapper.map(post, PostDTO.class));
+    }
+    public List<PostDTO> getPostsByBoardId(Long boardId) {
+        List<Post> posts = postRepository.findByBoardId(boardId);
+        List<PostDTO> postDTOs = posts.stream()
+                .map(post -> modelMapper.map(post, PostDTO.class))
+                .collect(Collectors.toList());
+        return postDTOs;
+    }
+
 }

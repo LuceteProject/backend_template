@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -43,4 +44,18 @@ public class CommentService {
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
         commentRepository.delete(comment);
     }
+    public List<CommentDTO> getAllComments() {
+        List<Comment> comments = commentRepository.findAll();
+        return comments.stream()
+                .map(comment -> modelMapper.map(comment, CommentDTO.class))
+                .collect(Collectors.toList());
+    }
+    public List<CommentDTO> getCommentsByPostId(Long postId) {
+        List<Comment> comments = commentRepository.findByPostId(postId);
+        List<CommentDTO> commentDTOs = comments.stream()
+                .map(comment -> modelMapper.map(comment, CommentDTO.class))
+                .collect(Collectors.toList());
+        return commentDTOs;
+    }
+
 }
