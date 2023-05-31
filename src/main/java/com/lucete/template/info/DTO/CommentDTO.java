@@ -15,5 +15,5 @@ public class CommentDTO {
     private Date created;
     private Date updated;
 
-    // Getters and Setters
+    /* Getters and Setters */
 }

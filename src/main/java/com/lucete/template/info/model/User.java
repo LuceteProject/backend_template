@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -40,5 +41,7 @@ public class User {
     private Date updated;
     @Column(length = 250, nullable = true)
     private String profile_message;
-
+    // User가 작성한 모든 Post
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts;
 }
