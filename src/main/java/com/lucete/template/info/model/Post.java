@@ -32,13 +32,18 @@ public class Post {
     private Date updated;
     // 추가된 컬럼들
     @Column
-    @JoinColumn(name = "user_id")
-    private Long author_id;
-    @Column
     private String author_name;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
 }

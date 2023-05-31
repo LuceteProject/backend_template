@@ -17,9 +17,8 @@ public class PostDTO {
     private Boolean is_notice;
     private Date created;
     private Date updated;
-    private Long author_id;
+    private Long user_id;
     private String author_name;
-    private List<CommentDTO> comments;
     private Long board_id;
 
     // Getters and Setters

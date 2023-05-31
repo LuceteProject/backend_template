@@ -25,37 +25,49 @@ public class CommentService {
     public CommentDTO createComment(CommentDTO commentDTO) {
         Comment comment = modelMapper.map(commentDTO, Comment.class);
         Comment savedComment = commentRepository.save(comment);
-        return modelMapper.map(savedComment, CommentDTO.class);
+        return convertToDto(savedComment);
     }
 
     public CommentDTO getComment(Long id) {
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
-        return modelMapper.map(comment, CommentDTO.class);
+        return convertToDto(comment);
     }
 
     public CommentDTO updateComment(Long id, CommentDTO commentDTO) {
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
         modelMapper.map(commentDTO, comment);
         Comment updatedComment = commentRepository.save(comment);
-        return modelMapper.map(updatedComment, CommentDTO.class);
+        return convertToDto(updatedComment);
     }
 
     public void deleteComment(Long id) {
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
         commentRepository.delete(comment);
     }
+
     public List<CommentDTO> getAllComments() {
         List<Comment> comments = commentRepository.findAll();
         return comments.stream()
-                .map(comment -> modelMapper.map(comment, CommentDTO.class))
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+
     public List<CommentDTO> getCommentsByPostId(Long postId) {
         List<Comment> comments = commentRepository.findByPostId(postId);
         List<CommentDTO> commentDTOs = comments.stream()
-                .map(comment -> modelMapper.map(comment, CommentDTO.class))
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
         return commentDTOs;
+    }
+
+    // Comment 엔티티를 CommentDTO로 변환하는 메소드
+    private CommentDTO convertToDto(Comment comment) {
+        CommentDTO commentDto = modelMapper.map(comment, CommentDTO.class);
+        if (comment.getPost() != null) {
+            commentDto.setPost_id(comment.getPost().getId());
+            commentDto.setUser_id(comment.getUser().getId());
+        }
+        return commentDto;
     }
 
 }

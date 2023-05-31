@@ -14,7 +14,5 @@ public class BoardDTO {
     private String name;
     private String discription;
     private Integer permission;
-    private List<PostDTO> posts;
-
     // Getters and Setters
 }
