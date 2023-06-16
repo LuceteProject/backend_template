@@ -2,7 +2,9 @@ package com.lucete.template.info.service;
 
 import com.lucete.template.info.DTO.PostDTO;
 import com.lucete.template.info.config.ResourceNotFoundException;
+import com.lucete.template.info.model.Board;
 import com.lucete.template.info.model.Post;
+import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.BoardRepository;
 import com.lucete.template.info.repository.PostRepository;
 import com.lucete.template.info.repository.UsersRepository;
@@ -24,7 +26,11 @@ public class PostService {
     private PostRepository postRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private UsersRepository userRepository;
 
+    @Autowired
+    private BoardRepository boardRepository;
     @Transactional(readOnly = true)
     public PostDTO getPostById(Long id) {
         Post post = postRepository.findWithUserAndBoardById(id)
@@ -33,8 +39,16 @@ public class PostService {
     }
 
     public PostDTO createPost(PostDTO postDto) {
+        User user = userRepository.findById(postDto.getUser_id())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + postDto.getUser_id()));
+        Board board = boardRepository.findById(postDto.getBoard_id())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid board_id: " + postDto.getBoard_id()));
+
         Post post = modelMapper.map(postDto, Post.class);
+        post.setUser(user);
+        post.setBoard(board);
         post = postRepository.save(post);
+
         return convertToDto(post);
     }
 
@@ -69,6 +83,9 @@ public class PostService {
         PostDTO postDto = modelMapper.map(post, PostDTO.class);
         postDto.setUser_id(post.getUser().getId());
         postDto.setBoard_id(post.getBoard().getId());
+        postDto.setCreated(post.getCreated());
+        postDto.setUpdated(post.getUpdated());
         return postDto;
     }
+
 }

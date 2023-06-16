@@ -2,7 +2,10 @@ package com.lucete.template.info.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -35,10 +38,12 @@ public class User {
     private Integer team_code;
     @Column
     private Integer permission;
-    @Column
-    private Date created;
-    @Column
-    private Date updated;
+    @CreationTimestamp
+    @Column(name = "created", nullable = false, updatable = false)
+    private LocalDateTime created;
+    @UpdateTimestamp
+    @Column(name = "updated", nullable = false)
+    private LocalDateTime updated;
     @Column(length = 250, nullable = true)
     private String profile_message;
     // User가 작성한 모든 Post

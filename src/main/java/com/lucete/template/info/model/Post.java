@@ -2,7 +2,10 @@ package com.lucete.template.info.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -26,9 +29,11 @@ public class Post {
     private Integer permission;
     @Column
     private Boolean is_notice;
-    @Column
+    @CreationTimestamp
+    @Column(name = "created", nullable = false, updatable = false)
     private Date created;
-    @Column
+    @UpdateTimestamp
+    @Column(name = "updated", nullable = false)
     private Date updated;
     // 추가된 컬럼들
     @Column
