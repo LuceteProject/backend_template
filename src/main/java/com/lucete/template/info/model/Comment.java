@@ -3,7 +3,10 @@ package com.lucete.template.info.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -28,10 +31,11 @@ public class Comment {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column
-    private Date created;
-
-    @Column
-    private Date updated;
+    @CreationTimestamp
+    @Column(name = "created", nullable = false, updatable = false)
+    private LocalDateTime created;
+    @UpdateTimestamp
+    @Column(name = "updated", nullable = false)
+    private LocalDateTime updated;
 
 }
