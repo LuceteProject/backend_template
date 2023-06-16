@@ -12,7 +12,7 @@ public class BoardDTO {
     private Integer category;
     private Integer header;
     private String name;
-    private String discription;
+    private String description;
     private Integer permission;
     // Getters and Setters
 }

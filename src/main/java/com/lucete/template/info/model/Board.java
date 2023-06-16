@@ -22,7 +22,7 @@ public class Board {
     @Column(length = 20, nullable = false)
     private String name;
     @Column
-    private String discription;
+    private String description;
     @Column
     private Integer permission;
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
