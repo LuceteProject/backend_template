@@ -54,10 +54,9 @@ public class CommentService {
 
     public List<CommentDTO> getCommentsByPostId(Long postId) {
         List<Comment> comments = commentRepository.findByPostId(postId);
-        List<CommentDTO> commentDTOs = comments.stream()
+        return comments.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
-        return commentDTOs;
     }
 
     // Comment 엔티티를 CommentDTO로 변환하는 메소드

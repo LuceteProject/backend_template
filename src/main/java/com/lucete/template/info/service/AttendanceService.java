@@ -54,10 +54,9 @@ public class AttendanceService {
 
     public List<AttendanceDTO> getAttendancesByUserId(Long userId) {
         List<Attendance> attendances = attendanceRepository.findByUserId(userId);
-        List<AttendanceDTO> attendanceDTOs = attendances.stream()
+        return attendances.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
-        return attendanceDTOs;
     }
 
     private AttendanceDTO convertToDto(Attendance attendance) {
