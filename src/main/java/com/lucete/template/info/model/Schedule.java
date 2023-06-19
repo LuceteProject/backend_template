@@ -15,8 +15,10 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //schedule model
-    @Column(length = 20, nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+    @Column
     private String title;
     @Column
     private String content;
@@ -26,4 +28,6 @@ public class Schedule {
     private Date end;
     @Column
     private Date alarm;
+    @Column
+    private Integer teamCode;
 }
