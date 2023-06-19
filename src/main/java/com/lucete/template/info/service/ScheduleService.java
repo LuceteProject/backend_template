@@ -49,18 +49,16 @@ public class ScheduleService {
 
     public List<ScheduleDTO> getSchedulesByUserId(Long userId) {
         List<Schedule> schedules = scheduleRepository.findByUserId(userId);
-        List<ScheduleDTO> scheduleDTOS = schedules.stream()
+        return schedules.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
-        return scheduleDTOS;
     }
 
     public List<ScheduleDTO> getSchedulesByTeamCode(Integer teamCode) {
         List<Schedule> schedules = scheduleRepository.findByTeamCode(teamCode);
-        List<ScheduleDTO> scheduleDTOS = schedules.stream()
+        return schedules.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
-        return scheduleDTOS;
     }
 
     public List<ScheduleDTO> getAllSchedules(){
