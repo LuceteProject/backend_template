@@ -9,7 +9,6 @@ import com.lucete.template.info.repository.BoardRepository;
 import com.lucete.template.info.repository.PostRepository;
 import com.lucete.template.info.repository.UsersRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,15 +21,16 @@ import java.util.stream.Collectors;
 @Transactional
 public class PostService {
 
-    @Autowired
-    private PostRepository postRepository;
-    @Autowired
-    private ModelMapper modelMapper;
-    @Autowired
-    private UsersRepository userRepository;
-
-    @Autowired
-    private BoardRepository boardRepository;
+    private final PostRepository postRepository;
+    private final ModelMapper modelMapper;
+    private final UsersRepository userRepository;
+    private final BoardRepository boardRepository;
+    public PostService(PostRepository postRepository,ModelMapper modelMapper,UsersRepository userRepository,BoardRepository boardRepository){
+        this.postRepository=postRepository;
+        this.modelMapper=modelMapper;
+        this.userRepository=userRepository;
+        this.boardRepository=boardRepository;
+    }
     @Transactional(readOnly = true)
     public PostDTO getPostById(Long id) {
         Post post = postRepository.findWithUserAndBoardById(id)

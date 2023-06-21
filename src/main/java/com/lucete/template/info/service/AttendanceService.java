@@ -3,7 +3,9 @@ package com.lucete.template.info.service;
 import com.lucete.template.info.DTO.AttendanceDTO;
 import com.lucete.template.info.config.ResourceNotFoundException;
 import com.lucete.template.info.model.Attendance;
+import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.AttendanceRepository;
+import com.lucete.template.info.repository.UsersRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,18 +16,24 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class AttendanceService {
+
     private final AttendanceRepository attendanceRepository;
     private final ModelMapper modelMapper;
+    private final UsersRepository userRepository;
 
-    public AttendanceService(AttendanceRepository attendanceRepository, ModelMapper modelMapper){
+    public AttendanceService(AttendanceRepository attendanceRepository, ModelMapper modelMapper, UsersRepository userRepository){
         this.attendanceRepository = attendanceRepository;
         this.modelMapper = modelMapper;
+        this.userRepository = userRepository;
     }
 
     public AttendanceDTO createAttendance(AttendanceDTO attendanceDTO) {
+        User user = userRepository.findById(attendanceDTO.getUser_id())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + attendanceDTO.getUser_id()));
         Attendance attendance = modelMapper.map(attendanceDTO, Attendance.class);
-        Attendance savedAttendance = attendanceRepository.save(attendance);
-        return convertToDto(savedAttendance);
+        attendance.setUser(user);
+        attendance = attendanceRepository.save(attendance);
+        return convertToDto(attendance);
     }
 
     public AttendanceDTO getAttendance(Long id) {

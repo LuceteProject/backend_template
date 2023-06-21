@@ -17,11 +17,14 @@ import java.util.List;
 @Service
 @Transactional
 public class BoardService {
-    @Autowired
-    private BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
+    public BoardService(BoardRepository boardRepository, ModelMapper modelMapper){
+        this.boardRepository = boardRepository;
+        this.modelMapper = modelMapper;
+    }
 
     @Transactional(readOnly = true)
     public BoardDTO getBoardById(Long id) {

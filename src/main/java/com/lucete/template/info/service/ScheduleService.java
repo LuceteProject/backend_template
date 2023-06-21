@@ -5,7 +5,9 @@ import com.lucete.template.info.DTO.ScheduleDTO;
 import com.lucete.template.info.config.ResourceNotFoundException;
 import com.lucete.template.info.model.Attendance;
 import com.lucete.template.info.model.Schedule;
+import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.ScheduleRepository;
+import com.lucete.template.info.repository.UsersRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,16 +20,21 @@ import java.util.stream.Collectors;
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final ModelMapper modelMapper;
+    private final UsersRepository userRepository;
 
-    public ScheduleService(ScheduleRepository scheduleRepository, ModelMapper modelMapper){
+    public ScheduleService(ScheduleRepository scheduleRepository, ModelMapper modelMapper, UsersRepository userRepository){
         this.scheduleRepository = scheduleRepository;
         this.modelMapper = modelMapper;
+        this.userRepository = userRepository;
     }
 
     public ScheduleDTO createSchedule(ScheduleDTO scheduleDTO) {
+        User user = userRepository.findById(scheduleDTO.getUser_id())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + scheduleDTO.getUser_id()));
         Schedule schedule = modelMapper.map(scheduleDTO, Schedule.class);
-        Schedule savedSchedule = scheduleRepository.save(schedule);
-        return convertToDTO(savedSchedule);
+        schedule.setUser(user);
+        schedule = scheduleRepository.save(schedule);
+        return convertToDTO(schedule);
     }
 
     public ScheduleDTO getSchedule(Long id) {
