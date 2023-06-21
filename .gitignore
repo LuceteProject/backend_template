@@ -3,3 +3,6 @@
 *.yml
 *.jar
 *.yml
+*.class
+*.meta
+*.class

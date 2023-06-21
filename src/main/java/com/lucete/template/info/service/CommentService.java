@@ -3,7 +3,11 @@ package com.lucete.template.info.service;
 import com.lucete.template.info.DTO.CommentDTO;
 import com.lucete.template.info.config.ResourceNotFoundException;
 import com.lucete.template.info.model.Comment;
+import com.lucete.template.info.model.Post;
+import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.CommentRepository;
+import com.lucete.template.info.repository.PostRepository;
+import com.lucete.template.info.repository.UsersRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,16 +20,26 @@ import java.util.stream.Collectors;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final ModelMapper modelMapper;
+    private final UsersRepository userRepository;
+    private final PostRepository postRepository;
 
-    public CommentService(CommentRepository commentRepository, ModelMapper modelMapper) {
+    public CommentService(CommentRepository commentRepository, ModelMapper modelMapper, UsersRepository userRepository, PostRepository postRepository) {
         this.commentRepository = commentRepository;
         this.modelMapper = modelMapper;
+        this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     public CommentDTO createComment(CommentDTO commentDTO) {
+        User user = userRepository.findById(commentDTO.getUser_id())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + commentDTO.getUser_id()));
+        Post post = postRepository.findById(commentDTO.getPost_id())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid post_id: " + commentDTO.getPost_id()));
         Comment comment = modelMapper.map(commentDTO, Comment.class);
-        Comment savedComment = commentRepository.save(comment);
-        return convertToDto(savedComment);
+        comment.setUser(user);
+        comment.setPost(post);
+        comment = commentRepository.save(comment);
+        return convertToDto(comment);
     }
 
     public CommentDTO getComment(Long id) {
