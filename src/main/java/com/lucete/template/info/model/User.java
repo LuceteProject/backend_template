@@ -40,10 +40,10 @@ public class User {
     private Integer permission;
     @CreationTimestamp
     @Column(name = "created", nullable = false, updatable = false)
-    private LocalDateTime created;
+    private Date created;
     @UpdateTimestamp
     @Column(name = "updated", nullable = false)
-    private LocalDateTime updated;
+    private Date updated;
     @Column(length = 250, nullable = true)
     private String profile_message;
     // User가 작성한 모든 Post

@@ -33,9 +33,9 @@ public class Comment {
 
     @CreationTimestamp
     @Column(name = "created", nullable = false, updatable = false)
-    private LocalDateTime created;
+    private Date created;
     @UpdateTimestamp
     @Column(name = "updated", nullable = false)
-    private LocalDateTime updated;
+    private Date updated;
 
 }
