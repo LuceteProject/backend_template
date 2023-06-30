@@ -2,7 +2,7 @@ package com.lucete.template.info.controller;
 
 import com.lucete.template.info.DTO.UserDTO;
 import com.lucete.template.info.model.User;
-import com.lucete.template.info.repository.UsersRepository;
+import com.lucete.template.info.repository.UserRepository;
 import com.lucete.template.info.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

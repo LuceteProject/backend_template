@@ -3,7 +3,7 @@ package com.lucete.template.info.service;
 import com.lucete.template.info.DTO.UserDTO;
 import com.lucete.template.info.config.ResourceNotFoundException;
 import com.lucete.template.info.model.User;
-import com.lucete.template.info.repository.UsersRepository;
+import com.lucete.template.info.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,11 +17,11 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserService {
-    private final UsersRepository userRepository;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public UserService(UsersRepository userRepository, ModelMapper modelMapper) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }

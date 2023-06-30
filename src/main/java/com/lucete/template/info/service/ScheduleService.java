@@ -7,7 +7,7 @@ import com.lucete.template.info.model.Attendance;
 import com.lucete.template.info.model.Schedule;
 import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.ScheduleRepository;
-import com.lucete.template.info.repository.UsersRepository;
+import com.lucete.template.info.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final ModelMapper modelMapper;
-    private final UsersRepository userRepository;
+    private final UserRepository userRepository;
 
-    public ScheduleService(ScheduleRepository scheduleRepository, ModelMapper modelMapper, UsersRepository userRepository){
+    public ScheduleService(ScheduleRepository scheduleRepository, ModelMapper modelMapper, UserRepository userRepository){
         this.scheduleRepository = scheduleRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
