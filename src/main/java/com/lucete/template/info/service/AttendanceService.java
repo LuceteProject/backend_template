@@ -5,7 +5,7 @@ import com.lucete.template.info.config.ResourceNotFoundException;
 import com.lucete.template.info.model.Attendance;
 import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.AttendanceRepository;
-import com.lucete.template.info.repository.UsersRepository;
+import com.lucete.template.info.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +19,9 @@ public class AttendanceService {
 
     private final AttendanceRepository attendanceRepository;
     private final ModelMapper modelMapper;
-    private final UsersRepository userRepository;
+    private final UserRepository userRepository;
 
-    public AttendanceService(AttendanceRepository attendanceRepository, ModelMapper modelMapper, UsersRepository userRepository){
+    public AttendanceService(AttendanceRepository attendanceRepository, ModelMapper modelMapper, UserRepository userRepository){
         this.attendanceRepository = attendanceRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;

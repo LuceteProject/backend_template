@@ -7,7 +7,7 @@ import com.lucete.template.info.model.Post;
 import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.BoardRepository;
 import com.lucete.template.info.repository.PostRepository;
-import com.lucete.template.info.repository.UsersRepository;
+import com.lucete.template.info.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +23,9 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final ModelMapper modelMapper;
-    private final UsersRepository userRepository;
+    private final UserRepository userRepository;
     private final BoardRepository boardRepository;
-    public PostService(PostRepository postRepository,ModelMapper modelMapper,UsersRepository userRepository,BoardRepository boardRepository){
+    public PostService(PostRepository postRepository,ModelMapper modelMapper,UserRepository userRepository,BoardRepository boardRepository){
         this.postRepository=postRepository;
         this.modelMapper=modelMapper;
         this.userRepository=userRepository;

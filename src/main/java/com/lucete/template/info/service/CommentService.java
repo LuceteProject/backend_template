@@ -7,7 +7,7 @@ import com.lucete.template.info.model.Post;
 import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.CommentRepository;
 import com.lucete.template.info.repository.PostRepository;
-import com.lucete.template.info.repository.UsersRepository;
+import com.lucete.template.info.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +20,10 @@ import java.util.stream.Collectors;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final ModelMapper modelMapper;
-    private final UsersRepository userRepository;
+    private final UserRepository userRepository;
     private final PostRepository postRepository;
 
-    public CommentService(CommentRepository commentRepository, ModelMapper modelMapper, UsersRepository userRepository, PostRepository postRepository) {
+    public CommentService(CommentRepository commentRepository, ModelMapper modelMapper, UserRepository userRepository, PostRepository postRepository) {
         this.commentRepository = commentRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
