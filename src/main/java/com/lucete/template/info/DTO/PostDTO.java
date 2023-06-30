@@ -19,7 +19,6 @@ public class PostDTO {
     private Long user_id;
     private String author_name;
     private Long board_id;
-    private Integer comment_count;
 
     // Getters and Setters
 }

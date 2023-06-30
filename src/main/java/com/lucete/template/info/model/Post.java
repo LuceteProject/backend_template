@@ -50,7 +50,4 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column
-    private Integer comment_count;
-
 }
