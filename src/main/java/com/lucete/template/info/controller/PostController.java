@@ -60,10 +60,10 @@ public class PostController {
         Pageable pageable = PageRequest.of(page, size);
         return postService.getAllPosts(pageable);
     }
-    @GetMapping("/{id}/posts")
+    @GetMapping("/{boardId}/posts")
     @Operation(summary = "특정 게시판에 속한 모든 게시물 조회", description = "게시판 ID를 이용하여 해당 게시판에 속한 모든 게시물을 조회합니다.")
-    public ResponseEntity<List<PostDTO>> getPostsByBoardId(@Parameter(description = "게시물을 조회할 게시판의 ID") @PathVariable Long id) {
-        List<PostDTO> posts = postService.getPostsByBoardId(id);
+    public ResponseEntity<List<PostDTO>> getPostsByBoardId(@Parameter(description = "게시물을 조회할 게시판의 ID") @PathVariable Long boardId) {
+        List<PostDTO> posts = postService.getPostsByBoardId(boardId);
         return ResponseEntity.ok(posts);
     }
 

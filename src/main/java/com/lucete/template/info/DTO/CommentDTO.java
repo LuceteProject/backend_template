@@ -14,6 +14,8 @@ public class CommentDTO {
     private String content;
     private Date created;
     private Date updated;
+    private Long parent;
+    private Boolean isDeleted;
 
     /* Getters and Setters */
 }
