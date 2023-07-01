@@ -56,7 +56,13 @@ public class CommentService {
 
     public void deleteComment(Long id) {
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
-        commentRepository.delete(comment);
+        List<Comment> childComments= commentRepository.findByParent(id);
+        if(childComments.isEmpty())
+            commentRepository.delete(comment);
+        else {
+            comment.setIsDeleted(true);
+            commentRepository.save(comment);
+        }
     }
 
     public List<CommentDTO> getAllComments() {

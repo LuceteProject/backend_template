@@ -38,4 +38,10 @@ public class Comment {
     @Column(name = "updated", nullable = false)
     private Date updated;
 
+    @Column
+    private Long parent;
+
+    @Column(nullable = false)
+    private Boolean isDeleted;
+
 }
