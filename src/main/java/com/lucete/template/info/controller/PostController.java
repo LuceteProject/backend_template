@@ -5,6 +5,7 @@ import com.lucete.template.info.DTO.PostDTO;
 import com.lucete.template.info.model.Post;
 import com.lucete.template.info.service.CommentService;
 import com.lucete.template.info.service.PostService;
+import com.lucete.template.info.service.ScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,34 +23,38 @@ import java.util.List;
 @Tag(name = "posts", description = "게시물 API")
 
 public class PostController {
-    @Autowired
-    private PostService postService;
-    private CommentService commentService;
-    @GetMapping("/{id}")
-    @Operation(summary = "특정 게시물 정보 조회", description = "게시물 ID를 이용하여 게시물 정보를 조회합니다.")
-    public ResponseEntity<PostDTO> getPostById(@PathVariable Long id) {
-        return ResponseEntity.ok(postService.getPostById(id));
+
+    private final PostService postService;
+    public PostController(PostService postService) {
+        this.postService = postService;
     }
 
-    @PostMapping("/")
+
+    @GetMapping("/{postId}")
+    @Operation(summary = "특정 게시물 정보 조회", description = "게시물 ID를 이용하여 게시물 정보를 조회합니다.")
+    public ResponseEntity<PostDTO> getPostById(@PathVariable Long postId) {
+        return ResponseEntity.ok(postService.getPostById(postId));
+    }
+
+    @PostMapping
     @Operation(summary = "새로운 게시물 생성", description = "새로운 게시물 정보를 입력하여 생성합니다.")
 
     public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDto) {
         return ResponseEntity.ok(postService.createPost(postDto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{postId}")
     @Operation(summary = "게시물 정보 수정", description = "게시물 ID를 이용하여 기존 게시물 정보를 수정합니다.")
 
-    public ResponseEntity<PostDTO> updatePost(@PathVariable Long id, @RequestBody PostDTO postDto) {
-        return ResponseEntity.ok(postService.updatePost(id, postDto));
+    public ResponseEntity<PostDTO> updatePost(@PathVariable Long postId, @RequestBody PostDTO postDto) {
+        return ResponseEntity.ok(postService.updatePost(postId, postDto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{postId}")
     @Operation(summary = "게시물 삭제", description = "게시물 ID를 이용하여 게시물 정보를 삭제합니다.")
 
-    public ResponseEntity<?> deletePost(@PathVariable Long id) {
-        postService.deletePost(id);
+    public ResponseEntity<?> deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
         return ResponseEntity.ok().build();
     }
     @GetMapping
@@ -60,7 +65,7 @@ public class PostController {
         Pageable pageable = PageRequest.of(page, size);
         return postService.getAllPosts(pageable);
     }
-    @GetMapping("/{boardId}/posts")
+    @GetMapping("/{boardId}")
     @Operation(summary = "특정 게시판에 속한 모든 게시물 조회", description = "게시판 ID를 이용하여 해당 게시판에 속한 모든 게시물을 조회합니다.")
     public ResponseEntity<List<PostDTO>> getPostsByBoardId(@Parameter(description = "게시물을 조회할 게시판의 ID") @PathVariable Long boardId) {
         List<PostDTO> posts = postService.getPostsByBoardId(boardId);

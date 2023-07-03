@@ -28,15 +28,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{userId}")
     @Operation(summary = "특정 사용자 정보 조회", description = "사용자 ID를 이용하여 사용자 정보를 조회합니다.")
 
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
-        UserDTO user = userService.getUser(id);
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long userId) {
+        UserDTO user = userService.getUser(userId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/")
+    @PostMapping
     @Operation(summary = "새로운 사용자 생성", description = "새로운 사용자 정보를 입력하여 생성합니다.")
 
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
@@ -44,19 +44,19 @@ public class UserController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{userId}")
     @Operation(summary = "사용자 정보 수정", description = "사용자 ID를 이용하여 기존 사용자 정보를 수정합니다.")
 
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
-        UserDTO updatedUser = userService.updateUser(id, userDTO);
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+        UserDTO updatedUser = userService.updateUser(userId, userDTO);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{userId}")
     @Operation(summary = "사용자 삭제", description = "사용자 ID를 이용하여 사용자 정보를 삭제합니다.")
 
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @GetMapping
