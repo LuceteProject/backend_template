@@ -1,7 +1,9 @@
 package com.lucete.template.info.service;
 
+import com.lucete.template.info.DTO.TodoDTO;
 import com.lucete.template.info.DTO.UserDTO;
 import com.lucete.template.info.config.ResourceNotFoundException;
+import com.lucete.template.info.model.Todo;
 import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -53,6 +55,14 @@ public class UserService {
         userRepository.delete(user);
     }
     public Page<UserDTO> getAllUsers(Pageable pageable) {
-        return userRepository.findAll(pageable).map(user -> modelMapper.map(user, UserDTO.class));
+        Page<User> users = userRepository.findAll(pageable);
+        return users.map(this::convertToDTO);
+    }
+
+    private UserDTO convertToDTO(User user) {
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        userDTO.setTeam_code(user.getTeamCode());
+        userDTO.setProfile_message(user.getProfileMessage());
+        return userDTO;
     }
 }

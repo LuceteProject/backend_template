@@ -39,19 +39,19 @@ public class CommentService {
         comment.setUser(user);
         comment.setPost(post);
         comment = commentRepository.save(comment);
-        return convertToDto(comment);
+        return convertToDTO(comment);
     }
 
     public CommentDTO getComment(Long id) {
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
-        return convertToDto(comment);
+        return convertToDTO(comment);
     }
 
     public CommentDTO updateComment(Long id, CommentDTO commentDTO) {
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
         modelMapper.map(commentDTO, comment);
         Comment updatedComment = commentRepository.save(comment);
-        return convertToDto(updatedComment);
+        return convertToDTO(updatedComment);
     }
 
     public void deleteComment(Long id) {
@@ -76,25 +76,26 @@ public class CommentService {
     public List<CommentDTO> getAllComments() {
         List<Comment> comments = commentRepository.findAll();
         return comments.stream()
-                .map(this::convertToDto)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     public List<CommentDTO> getCommentsByPostId(Long postId) {
         List<Comment> comments = commentRepository.findByPostId(postId);
         return comments.stream()
-                .map(this::convertToDto)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     // Comment 엔티티를 CommentDTO로 변환하는 메소드
-    private CommentDTO convertToDto(Comment comment) {
-        CommentDTO commentDto = modelMapper.map(comment, CommentDTO.class);
+    private CommentDTO convertToDTO(Comment comment) {
+        CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
         if (comment.getPost() != null) {
-            commentDto.setPost_id(comment.getPost().getId());
-            commentDto.setUser_id(comment.getUser().getId());
+            commentDTO.setPost_id(comment.getPost().getId());
+            commentDTO.setUser_id(comment.getUser().getId());
+            commentDTO.setIs_deleted(comment.getIsDeleted());
         }
-        return commentDto;
+        return commentDTO;
     }
 
 }

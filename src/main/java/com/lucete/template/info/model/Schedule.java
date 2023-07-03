@@ -28,6 +28,6 @@ public class Schedule {
     private Date end;
     @Column
     private Date alarm;
-    @Column
+    @Column(name = "team_code")
     private Integer teamCode;
 }

@@ -35,7 +35,7 @@ public class PostService {
     public PostDTO getPostById(Long id) {
         Post post = postRepository.findWithUserAndBoardById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
-        return convertToDto(post);
+        return convertToDTO(post);
     }
 
     public PostDTO createPost(PostDTO postDto) {
@@ -49,7 +49,7 @@ public class PostService {
         post.setBoard(board);
         post = postRepository.save(post);
 
-        return convertToDto(post);
+        return convertToDTO(post);
     }
 
     public PostDTO updatePost(Long id, PostDTO postDto) {
@@ -57,7 +57,7 @@ public class PostService {
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
         modelMapper.map(postDto, post);
         post = postRepository.save(post);
-        return convertToDto(post);
+        return convertToDTO(post);
     }
 
     @Transactional
@@ -68,24 +68,24 @@ public class PostService {
     }
     @Transactional
     public Page<PostDTO> getAllPosts(Pageable pageable) {
-        return postRepository.findAll(pageable).map(this::convertToDto);
+        return postRepository.findAll(pageable).map(this::convertToDTO);
     }
 
     @Transactional
     public List<PostDTO> getPostsByBoardId(Long boardId) {
         List<Post> posts = postRepository.findByBoardId(boardId);
         return posts.stream()
-                .map(this::convertToDto)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    private PostDTO convertToDto(Post post) {
-        PostDTO postDto = modelMapper.map(post, PostDTO.class);
-        postDto.setUser_id(post.getUser().getId());
-        postDto.setBoard_id(post.getBoard().getId());
-        postDto.setCreated(post.getCreated());
-        postDto.setUpdated(post.getUpdated());
-        return postDto;
+    private PostDTO convertToDTO(Post post) {
+        PostDTO postDTO = modelMapper.map(post, PostDTO.class);
+        postDTO.setUser_id(post.getUser().getId());
+        postDTO.setBoard_id(post.getBoard().getId());
+        postDTO.setIs_notice(post.getIsNotice());
+        postDTO.setAuthor_name(post.getAuthorName());
+        return postDTO;
     }
 
 }

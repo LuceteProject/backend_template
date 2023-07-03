@@ -2,8 +2,10 @@ package com.lucete.template.info.service;
 
 import com.lucete.template.info.DTO.BoardDTO;
 import com.lucete.template.info.DTO.PostDTO;
+import com.lucete.template.info.DTO.UserDTO;
 import com.lucete.template.info.config.ResourceNotFoundException;
 import com.lucete.template.info.model.Board;
+import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.BoardRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,23 +32,23 @@ public class BoardService {
     public BoardDTO getBoardById(Long id) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Board", "id", id));
-        return modelMapper.map(board, BoardDTO.class);
+        return convertToDTO(board);
     }
 
     @Transactional
-    public BoardDTO createBoard(BoardDTO boardDto) {
-        Board board = modelMapper.map(boardDto, Board.class);
+    public BoardDTO createBoard(BoardDTO boardDTO) {
+        Board board = modelMapper.map(boardDTO, Board.class);
         board = boardRepository.save(board);
-        return modelMapper.map(board, BoardDTO.class);
+        return convertToDTO(board);
     }
 
     @Transactional
-    public BoardDTO updateBoard(Long id, BoardDTO boardDto) {
+    public BoardDTO updateBoard(Long id, BoardDTO boardDTO) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Board", "id", id));
-        modelMapper.map(boardDto, board);
+        modelMapper.map(boardDTO, board);
         board = boardRepository.save(board);
-        return modelMapper.map(board, BoardDTO.class);
+        return convertToDTO(board);
     }
 
     @Transactional
@@ -56,6 +58,10 @@ public class BoardService {
         boardRepository.delete(board);
     }
     public Page<BoardDTO> getAllPosts(Pageable pageable) {
-        return boardRepository.findAll(pageable).map(board -> modelMapper.map(board, BoardDTO.class));
+        Page<Board> boards = boardRepository.findAll(pageable);
+        return boards.map(this::convertToDTO);
+    }
+    private BoardDTO convertToDTO(Board board) {
+        return modelMapper.map(board, BoardDTO.class);
     }
 }

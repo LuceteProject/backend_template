@@ -41,7 +41,7 @@ public class Comment {
     @Column
     private Long parent;
 
-    @Column(nullable = false)
+    @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted;
 
 }

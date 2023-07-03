@@ -34,8 +34,8 @@ public class User {
     private Boolean status;
     @Column
     private Integer semester;
-    @Column
-    private Integer team_code;
+    @Column(name = "team_code")
+    private Integer teamCode;
     @Column
     private Integer permission;
     @CreationTimestamp
@@ -44,8 +44,8 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated", nullable = false)
     private Date updated;
-    @Column(length = 250, nullable = true)
-    private String profile_message;
+    @Column(name = "profile_message",length = 250, nullable = true)
+    private String profileMessage;
     // User가 작성한 모든 Post
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts;

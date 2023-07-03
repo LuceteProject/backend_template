@@ -9,5 +9,5 @@ public class TodoDTO {
     private Long id;
     private Long user_id;
     private String content;
-    private Integer teamCode;
+    private Integer team_code;
 }
