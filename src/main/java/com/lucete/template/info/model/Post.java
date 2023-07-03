@@ -27,8 +27,8 @@ public class Post {
     private String content;
     @Column
     private Integer permission;
-    @Column
-    private Boolean is_notice;
+    @Column(name = "is_notice")
+    private Boolean isNotice;
     @CreationTimestamp
     @Column(name = "created", nullable = false, updatable = false)
     private Date created;
@@ -36,8 +36,8 @@ public class Post {
     @Column(name = "updated", nullable = false)
     private Date updated;
     // 추가된 컬럼들
-    @Column
-    private String author_name;
+    @Column(name = "author_name")
+    private String authorName;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;

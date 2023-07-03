@@ -33,19 +33,19 @@ public class AttendanceService {
         Attendance attendance = modelMapper.map(attendanceDTO, Attendance.class);
         attendance.setUser(user);
         attendance = attendanceRepository.save(attendance);
-        return convertToDto(attendance);
+        return convertToDTO(attendance);
     }
 
     public AttendanceDTO getAttendance(Long id) {
         Attendance attendance = attendanceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Attendance", "id", id));
-        return convertToDto(attendance);
+        return convertToDTO(attendance);
     }
 
     public AttendanceDTO updateAttendance(Long id, AttendanceDTO attendanceDTO) {
         Attendance attendance = attendanceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Attendance", "id", id));
         modelMapper.map(attendanceDTO, attendance);
         Attendance updatedAttendance = attendanceRepository.save(attendance);
-        return convertToDto(updatedAttendance);
+        return convertToDTO(updatedAttendance);
     }
 
     public void deleteAttendance(Long id) {
@@ -56,18 +56,18 @@ public class AttendanceService {
     public List<AttendanceDTO> getAllAttendances(){
         List<Attendance> attendances = attendanceRepository.findAll();
         return attendances.stream()
-                .map(this::convertToDto)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     public List<AttendanceDTO> getAttendancesByUserId(Long userId) {
         List<Attendance> attendances = attendanceRepository.findByUserId(userId);
         return attendances.stream()
-                .map(this::convertToDto)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    private AttendanceDTO convertToDto(Attendance attendance) {
+    private AttendanceDTO convertToDTO(Attendance attendance) {
         AttendanceDTO attendanceDTO = modelMapper.map(attendance, AttendanceDTO.class);
         attendanceDTO.setUser_id(attendance.getUser().getId());
         return attendanceDTO;

@@ -14,5 +14,5 @@ public class ScheduleDTO {
     private Date start;
     private Date end;
     private Date alarm;
-    private Integer teamCode;
+    private Integer team_code;
 }

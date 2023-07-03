@@ -20,6 +20,6 @@ public class Todo {
     private User user;
     @Column
     private String content;
-    @Column
+    @Column(name = "team_code")
     private Integer teamCode;
 }

@@ -77,6 +77,7 @@ public class ScheduleService {
     private ScheduleDTO convertToDTO(Schedule schedule) {
         ScheduleDTO scheduleDTO = modelMapper.map(schedule, ScheduleDTO.class);
         scheduleDTO.setUser_id(schedule.getUser().getId());
+        scheduleDTO.setTeam_code(schedule.getTeamCode());
         return scheduleDTO;
     }
 }

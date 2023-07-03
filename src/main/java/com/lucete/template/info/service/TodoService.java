@@ -32,19 +32,19 @@ public class TodoService {
         Todo todo = modelMapper.map(todoDTO, Todo.class);
         todo.setUser(user);
         todo = todoRepository.save(todo);
-        return convertToDto(todo);
+        return convertToDTO(todo);
     }
 
     public TodoDTO getTodo(Long id) {
         Todo todo = todoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Todo", "id", id));
-        return convertToDto(todo);
+        return convertToDTO(todo);
     }
 
     public TodoDTO updateTodo(Long id, TodoDTO todoDTO) {
         Todo todo = todoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Todo", "id", id));
         modelMapper.map(todoDTO, todo);
         Todo updatedTodo = todoRepository.save(todo);
-        return convertToDto(updatedTodo);
+        return convertToDTO(updatedTodo);
     }
 
     public void deleteTodo(Long id) {
@@ -55,20 +55,21 @@ public class TodoService {
     public List<TodoDTO> getAllTodos(){
         List<Todo> todos = todoRepository.findAll();
         return todos.stream()
-                .map(this::convertToDto)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     public List<TodoDTO> getTodosByUserId(Long userId) {
         List<Todo> todos = todoRepository.findByUserId(userId);
         return todos.stream()
-                .map(this::convertToDto)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    private TodoDTO convertToDto(Todo todo) {
+    private TodoDTO convertToDTO(Todo todo) {
         TodoDTO todoDTO = modelMapper.map(todo, TodoDTO.class);
         todoDTO.setUser_id(todo.getUser().getId());
+        todoDTO.setTeam_code(todo.getTeamCode());
         return todoDTO;
     }
 }
