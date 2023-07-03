@@ -21,31 +21,32 @@ import java.util.List;
 @RequestMapping("api/v1/boards")
 @Tag(name = "boards", description = "게시판 API")
 public class BoardController {
-    @Autowired
-    private BoardService boardService;
-    private PostService postService;
-    @GetMapping("/{id}")
+
+    private final BoardService boardService;
+    public BoardController(BoardService boardService) { this.boardService = boardService; }
+
+    @GetMapping("/{boardId}")
     @Operation(summary = "특정 게시판 정보 조회", description = "게시판 ID를 이용하여 게시판 정보를 조회합니다.")
-    public ResponseEntity<BoardDTO> getBoardById(@PathVariable Long id) {
-        return ResponseEntity.ok(boardService.getBoardById(id));
+    public ResponseEntity<BoardDTO> getBoardById(@PathVariable Long boardId) {
+        return ResponseEntity.ok(boardService.getBoardById(boardId));
     }
 
-    @PostMapping("/")
+    @PostMapping
     @Operation(summary = "새로운 게시판 생성", description = "새로운 게시판 정보를 입력하여 생성합니다.")
     public ResponseEntity<BoardDTO> createBoard(@RequestBody BoardDTO boardDto) {
         return ResponseEntity.ok(boardService.createBoard(boardDto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{boardId}")
     @Operation(summary = "게시판 정보 수정", description = "게시판 ID를 이용하여 기존 게시판 정보를 수정합니다.")
-    public ResponseEntity<BoardDTO> updateBoard(@PathVariable Long id, @RequestBody BoardDTO boardDto) {
-        return ResponseEntity.ok(boardService.updateBoard(id, boardDto));
+    public ResponseEntity<BoardDTO> updateBoard(@PathVariable Long boardId, @RequestBody BoardDTO boardDto) {
+        return ResponseEntity.ok(boardService.updateBoard(boardId, boardDto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{boardId}")
     @Operation(summary = "게시판 삭제", description = "게시판 ID를 이용하여 게시판 정보를 삭제합니다.")
-    public ResponseEntity<?> deleteBoard(@PathVariable Long id) {
-        boardService.deleteBoard(id);
+    public ResponseEntity<?> deleteBoard(@PathVariable Long boardId) {
+        boardService.deleteBoard(boardId);
         return ResponseEntity.ok().build();
     }
     @GetMapping
