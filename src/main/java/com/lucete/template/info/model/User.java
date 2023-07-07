@@ -23,6 +23,8 @@ public class User {
     @Column(length = 20, nullable = false)
     private String name;
     @Column(length = 50, nullable = true)
+    private String googleId;
+    @Column(length = 50, nullable = true)
     private String email;
     @Column(length = 20, nullable = false)
     private String phone;
