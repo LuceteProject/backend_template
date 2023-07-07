@@ -11,7 +11,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +69,15 @@ public class UserController {
                                      @RequestParam(required = false, defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return userService.getAllUsers(pageable);
+    }
+    @GetMapping("/me")
+    public UserDTO getCurrentUser(OAuth2AuthenticationToken token) {
+        OAuth2User googleUser = token.getPrincipal();
+        return userService.createGoogleUser(googleUser);
+    }
+    @GetMapping("/forgot-password")
+    public RedirectView forgotPassword() {
+        return new RedirectView("https://accounts.google.com/signin/recovery");
     }
 }
 

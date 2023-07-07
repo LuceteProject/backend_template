@@ -6,6 +6,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
     username: root
+<<<<<<< Updated upstream
     password:
 
     #driver-class-name: org.mariadb.jdbc.Driver
@@ -13,10 +14,21 @@ spring:
     #username: root
     #password: "lucete1347"
 
+=======
+    password: 'tkdlvjwm12@'
+>>>>>>> Stashed changes
   jpa:
     hibernate:
       ddl-auto: update
   security:
-    user:
-      name: user
-      password: 1234
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 493099774582-reicj1k90uhjl610i4ll9p3pp890kin4.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - openid
+              - email
+              - profile

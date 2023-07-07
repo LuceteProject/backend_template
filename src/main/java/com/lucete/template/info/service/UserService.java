@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,5 +65,26 @@ public class UserService {
         userDTO.setTeam_code(user.getTeamCode());
         userDTO.setProfile_message(user.getProfileMessage());
         return userDTO;
+    }
+    public UserDTO createGoogleUser(OAuth2User googleUser) {
+        String email = googleUser.getAttribute("email");
+        String name = googleUser.getAttribute("name");
+        String googleId = googleUser.getAttribute("sub");  // Google ID는 'sub' 속성에 있습니다.
+
+        // 이미 가입한 사용자인지 확인합니다.
+        Optional<User> existingUser = userRepository.findByEmail(email);
+        if (existingUser.isPresent()) {
+            // 이미 가입한 사용자라면, 그대로 반환합니다.
+            return modelMapper.map(existingUser.get(), UserDTO.class);
+        }
+
+        // 새 사용자를 생성하고 저장합니다.
+        User user = new User();
+        user.setEmail(email);
+        user.setName(name);
+        user.setGoogleId(googleId);
+        User savedUser = userRepository.save(user);
+
+        return modelMapper.map(savedUser, UserDTO.class);
     }
 }
