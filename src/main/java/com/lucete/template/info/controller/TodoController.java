@@ -34,7 +34,7 @@ public class TodoController {
         return todoService.getTodo(todoId);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/userID/{userId}")
     @Operation(summary = "특정 사용자의 모든 할 일 조회", description = "사용자 ID를 이용하여 해당 사용자의 모든 할 일 조회합니다.")
     public ResponseEntity<List<TodoDTO>> getTodosByUserId(@Parameter(description = "할 일을 조회할 사용자의 ID") @PathVariable Long userId) {
         List<TodoDTO> todos = todoService.getTodosByUserId(userId);

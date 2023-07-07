@@ -34,7 +34,7 @@ public class AttendanceController {
         return attendanceService.getAttendance(attendanceId);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/userID/{userId}")
     @Operation(summary = "특정 사용자의 모든 출결 조회", description = "사용자 ID를 이용하여 해당 사용자의 모든 출결을 조회합니다.")
     public ResponseEntity<List<AttendanceDTO>> getAttendancesByUserId(@Parameter(description = "출결을 조회할 사용자의 ID") @PathVariable Long userId) {
         List<AttendanceDTO> attendances = attendanceService.getAttendancesByUserId(userId);
