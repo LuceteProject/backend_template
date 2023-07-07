@@ -34,14 +34,14 @@ public class ScheduleController {
         return scheduleService.getSchedule(scheduleId);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/userID/{userId}")
     @Operation(summary = "특정 사용자의 모든 일정 조회", description = "사용자 ID를 이용하여 해당 사용자의 모든 일정을 조회합니다.")
     public ResponseEntity<List<ScheduleDTO>> getSchedulesByUserId(@Parameter(description = "일정을 조회할 사용자의 ID") @PathVariable Long userId) {
         List<ScheduleDTO> schedules = scheduleService.getSchedulesByUserId(userId);
         return ResponseEntity.ok(schedules);
     }
 
-    @GetMapping("/{teamCode}")
+    @GetMapping("/teamCode/{teamCode}")
     @Operation(summary = "특정 팀의 모든 팀 일정 조회", description = "팀 코드를 이용하여 해당 팀의 모든 팀 일정을 조회합니다.")
     public ResponseEntity<List<ScheduleDTO>> getSchedulesByTeamCode(@Parameter(description = "일정을 조회할 팀 코드") @PathVariable Integer teamCode) {
         List<ScheduleDTO> schedules = scheduleService.getSchedulesByTeamCode(teamCode);
