@@ -22,8 +22,11 @@ public class User {
     private Long id;
     @Column(length = 20, nullable = false)
     private String name;
-    @Column(name = "google_id", length = 50, nullable = true)
-    private String googleId;
+    @Column(name = "provider", length = 50, nullable = true)
+    private String provider;
+
+    @Column(name = "provider_id", length = 50, nullable = true)
+    private String providerId;
     @Column(length = 50, nullable = true)
     private String email;
     @Column(length = 20, nullable = false)

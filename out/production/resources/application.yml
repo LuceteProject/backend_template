@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
     username: root
-    password:
+    password: "tkdlvjwm12@"
 
     #EC2
     #driver-class-name: org.mariadb.jdbc.Driver
@@ -16,7 +16,7 @@ spring:
     #password: "lucete1347"
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
   security:
     oauth2:
       client:
@@ -30,8 +30,8 @@ spring:
               - email
               - profile
           naver:
-            client-id: aMuXCedmINxvC1kGGYlF
-            client-secret: jxdtkbg1Di
+            client-id: KgbpyZjpXXLi7s7sHfDP
+            client-secret: Vcwzr4h2ya
             client-name: Naver
             redirect_uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code

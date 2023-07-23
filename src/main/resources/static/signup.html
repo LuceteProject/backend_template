@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<h2>Sign Up</h2>
+<form id="signupForm">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name"><br>
+    <label for="email">Email:</label><br>
+    <input type="text" id="email" name="email"><br>
+    <label for="phone">Phone:</label><br>
+    <input type="text" id="phone" name="phone"><br>
+    <label for="team">Team:</label><br>
+    <input type="text" id="team" name="team"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br>
+    <label for="semester">Semester:</label><br>
+    <input type="number" id="semester" name="semester"><br>
+    <label for="profileMessage">Profile Message:</label><br>
+    <input type="text" id="profileMessage" name="profileMessage"><br>
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    $(document).ready(function() {
+        $('#signupForm').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/api/v1/users/signup',
+                type: 'post',
+                data: $('#signupForm').serialize(),
+                success: function(response) {
+                    alert('Signup successful. User info: ' + JSON.stringify(response));
+                },
+                error: function(response) {
+                    alert('Signup failed. Please try again.');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

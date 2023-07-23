@@ -2,6 +2,7 @@ package com.lucete.template.info.service;
 
 import com.lucete.template.info.DTO.TodoDTO;
 import com.lucete.template.info.DTO.UserDTO;
+import com.lucete.template.info.DTO.UserInfo;
 import com.lucete.template.info.config.ResourceNotFoundException;
 import com.lucete.template.info.model.Todo;
 import com.lucete.template.info.model.User;
@@ -10,6 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +25,14 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
+
     }
 
 
@@ -62,30 +68,26 @@ public class UserService {
 
     private UserDTO convertToDTO(User user) {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        userDTO.setGoogle_id(user.getGoogleId());
         userDTO.setTeam_code(user.getTeamCode());
         userDTO.setProfile_message(user.getProfileMessage());
         return userDTO;
     }
-    public UserDTO createGoogleUser(OAuth2User googleUser) {
-        String email = googleUser.getAttribute("email");
-        String name = googleUser.getAttribute("name");
-        String googleId = googleUser.getAttribute("sub");  // Google ID는 'sub' 속성에 있습니다.
-
-        // 이미 가입한 사용자인지 확인합니다.
-        Optional<User> existingUser = userRepository.findByEmail(email);
-        if (existingUser.isPresent()) {
-            // 이미 가입한 사용자라면, 그대로 반환합니다.
-            return modelMapper.map(existingUser.get(), UserDTO.class);
-        }
-
-        // 새 사용자를 생성하고 저장합니다.
-        User user = new User();
-        user.setEmail(email);
-        user.setName(name);
-        user.setGoogleId(googleId);
+    public UserDTO registerUser(UserInfo userinfoDTO) {
+        User user = modelMapper.map(userinfoDTO, User.class);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));  // Encode the password
         User savedUser = userRepository.save(user);
-
         return modelMapper.map(savedUser, UserDTO.class);
+    }
+
+    public UserDTO loginUser(String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new ResourceNotFoundException("User", "email", email));
+        if (!passwordEncoder.matches(password, user.getPassword())) {  // Check if the password matches
+            throw new BadCredentialsException("Invalid password");
+        }
+        return modelMapper.map(user, UserDTO.class);
+    }
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
     }
 }

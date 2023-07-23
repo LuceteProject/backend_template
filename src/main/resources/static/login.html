@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<h2>Login</h2>
+<form id="loginForm">
+    <label for="email">Email:</label><br>
+    <input type="text" id="email" name="email"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br>
+    <input type="submit" value="Submit">
+</form>
+<button id="signupButton">Sign Up</button>
+
+<script>
+    $(document).ready(function() {
+        $('#loginForm').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/api/v1/users/login',
+                type: 'post',
+                data: $('#loginForm').serialize(),
+                success: function(response) {
+                    alert('Login successful. User info: ' + JSON.stringify(response));
+                },
+                error: function(response) {
+                    alert('Login failed. Please try again.');
+                }
+            });
+        });
+
+        $('#signupButton').on('click', function() {
+            window.location.href = '/signup.html';
+        });
+    });
+</script>
+
+</body>
+</html>
