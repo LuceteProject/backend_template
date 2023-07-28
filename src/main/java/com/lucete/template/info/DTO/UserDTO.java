@@ -9,7 +9,6 @@ import java.util.Date;
 public class UserDTO {
     private Long id;
     private String name;
-    private String google_id;
     private String email;
     private String phone;
     private String team;
@@ -21,6 +20,4 @@ public class UserDTO {
     private Date created;
     private Date updated;
     private String profile_message;
-    private String provider;
-    private String providerId;
 }
