@@ -41,7 +41,7 @@ spring:
             client-id: KgbpyZjpXXLi7s7sHfDP
             client-secret: Vcwzr4h2ya
             client-name: Naver
-            redirect_uri: "http://localhost:3000/board"
+            redirect_uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
             scope:
               - name
