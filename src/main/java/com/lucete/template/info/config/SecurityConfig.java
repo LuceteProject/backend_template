@@ -18,7 +18,11 @@ public class SecurityConfig {
                         .requestMatchers("/", "/api*", "/api-docs/**", "/swagger-ui/**").permitAll() // /swagger-ui/** 경로에 대해 인증이 필요하지 않음
                         .anyRequest().authenticated() // 나머지 모든 요청에 대해 인증이 필요
                 )
-                .oauth2Login(withDefaults()); // OAuth2 로그인을 기본 설정으로 활성화
+                .oauth2Login(oauth2Login -> {
+                    oauth2Login
+                            .loginPage("/login") // 사용자 정의 로그인 페이지 URL
+                            .successHandler(new CustomOAuth2LoginSuccessHandler()); // 사용자 정의 로그인 성공 핸들러
+                });
         return http.build();
     }
 }
