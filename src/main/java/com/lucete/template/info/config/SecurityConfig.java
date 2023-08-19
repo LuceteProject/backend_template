@@ -15,7 +15,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/swagger-ui/**").permitAll() // /swagger-ui/** 경로에 대해 인증이 필요하지 않음
+                        .requestMatchers("/", "/api*", "/api-docs/**", "/swagger-ui/**").permitAll() // /swagger-ui/** 경로에 대해 인증이 필요하지 않음
                         .anyRequest().authenticated() // 나머지 모든 요청에 대해 인증이 필요
                 )
                 .oauth2Login(withDefaults()); // OAuth2 로그인을 기본 설정으로 활성화
