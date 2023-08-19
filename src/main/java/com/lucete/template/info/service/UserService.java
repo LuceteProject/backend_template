@@ -33,13 +33,13 @@ public class UserService {
     public UserDTO getUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User", "id", id));
-        return modelMapper.map(user, UserDTO.class);
+        return convertToDTO(user);
     }
 
     public UserDTO createUser(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
-        User savedUser = userRepository.save(user);
-        return modelMapper.map(savedUser, UserDTO.class);
+        user = userRepository.save(user);
+        return convertToDTO(user);
     }
 
     public UserDTO updateUser(Long id, UserDTO userDTO) {
@@ -47,7 +47,7 @@ public class UserService {
                 () -> new ResourceNotFoundException("User", "id", id));
         modelMapper.map(userDTO, user);
         User updatedUser = userRepository.save(user);
-        return modelMapper.map(updatedUser, UserDTO.class);
+        return convertToDTO(updatedUser);
     }
 
     public void deleteUser(Long id) {

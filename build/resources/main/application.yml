@@ -1,19 +1,27 @@
 server:
   port: 8080
   address: 0.0.0.0
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+    path: /api-ui.html
+  api-docs:
+    path: /api-docs
+  show-actuator: true
+  default-produces-media-type: application/json
 spring:
   datasource:
     #localhost
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
-    username: root
-    password:
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://localhost:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
+    #username: root
+    #password: ""
 
     #EC2
-    #driver-class-name: org.mariadb.jdbc.Driver
-    #url: jdbc:mariadb://lucete-db:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
-    #username: root
-    #password: "lucete1347"
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://lucete-db:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
+    username: root
+    password: "lucete1347"
   jpa:
     hibernate:
       ddl-auto: validate
@@ -30,8 +38,8 @@ spring:
               - email
               - profile
           naver:
-            client-id: aMuXCedmINxvC1kGGYlF
-            client-secret: jxdtkbg1Di
+            client-id: KgbpyZjpXXLi7s7sHfDP
+            client-secret: Vcwzr4h2ya
             client-name: Naver
             redirect_uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
