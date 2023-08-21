@@ -23,7 +23,7 @@ spring:
     #password: "lucete1347"
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
   security:
     oauth2:
       client:

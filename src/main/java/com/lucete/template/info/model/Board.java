@@ -17,6 +17,6 @@ public class Board {
     private Long id;
     @Column(length = 20, nullable = false)
     private String name;
-    @Column
-    private Integer permission;
+    @Column(name = "permission_code")
+    private Integer permissionCode;
 }
