@@ -21,4 +21,5 @@ public class UserDTO {
     private Date created;
     private Date updated;
     private String profile_message;
+    private String profile_image;
 }
