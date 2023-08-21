@@ -84,7 +84,7 @@ public class PostService {
         postDTO.setUser_id(post.getUser().getId());
         postDTO.setBoard_id(post.getBoard().getId());
         postDTO.setIs_notice(post.getIsNotice());
-        postDTO.setAuthor_name(post.getAuthorName());
+        postDTO.setTeam_code(post.getTeamCode());
         return postDTO;
     }
 

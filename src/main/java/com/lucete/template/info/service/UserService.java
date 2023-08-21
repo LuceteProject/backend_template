@@ -63,6 +63,7 @@ public class UserService {
     private UserDTO convertToDTO(User user) {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         userDTO.setGoogle_id(user.getGoogleId());
+        userDTO.setNaver_id(user.getNaverId());
         userDTO.setTeam_code(user.getTeamCode());
         userDTO.setProfile_message(user.getProfileMessage());
         return userDTO;
