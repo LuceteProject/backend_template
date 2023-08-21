@@ -46,6 +46,8 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated", nullable = false)
     private Date updated;
-    @Column(name = "profile_message",length = 250, nullable = true)
+    @Column(name = "profile_message")
     private String profileMessage;
+    @Column(name = "profile_image")
+    private String profileImage;
 }
