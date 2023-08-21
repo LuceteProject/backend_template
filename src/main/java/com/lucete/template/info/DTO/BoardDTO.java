@@ -9,10 +9,6 @@ import java.util.List;
 @Setter
 public class BoardDTO {
     private Long id;
-    private Integer category;
-    private Integer header;
     private String name;
-    private String description;
     private Integer permission;
-    // Getters and Setters
 }

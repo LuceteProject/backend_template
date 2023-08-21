@@ -19,8 +19,8 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
-    private Integer header;
+    @Column (name = "team_code")
+    private Integer teamCode;
     @Column
     private String title;
     @Column(columnDefinition = "TEXT")
@@ -35,12 +35,6 @@ public class Post {
     @UpdateTimestamp
     @Column(name = "updated", nullable = false)
     private Date updated;
-    // 추가된 컬럼들
-    @Column(name = "author_name")
-    private String authorName;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Comment> comments;
 
     @ManyToOne
     @JoinColumn(name = "board_id")

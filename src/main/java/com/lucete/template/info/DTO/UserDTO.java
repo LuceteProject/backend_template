@@ -10,16 +10,15 @@ public class UserDTO {
     private Long id;
     private String name;
     private String google_id;
+    private String naver_id;
     private String email;
     private String phone;
-    private String team;
     private String password;
-    private Boolean status;
     private Integer semester;
     private Integer team_code;
     private Integer permission;
+    private Boolean att_manager;
     private Date created;
     private Date updated;
     private String profile_message;
-
 }

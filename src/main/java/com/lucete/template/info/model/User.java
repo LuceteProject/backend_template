@@ -24,22 +24,22 @@ public class User {
     private String name;
     @Column(name = "google_id", length = 50, nullable = true)
     private String googleId;
+    @Column(name = "naver_id", length = 50, nullable = true)
+    private String naverId;
     @Column(length = 50, nullable = true)
     private String email;
     @Column(length = 20, nullable = false)
     private String phone;
     @Column(length = 10, nullable = false)
-    private String team;
-    @Column(length = 50, nullable = false)
     private String password;
-    @Column
-    private Boolean status;
     @Column
     private Integer semester;
     @Column(name = "team_code")
     private Integer teamCode;
     @Column
     private Integer permission;
+    @Column
+    private Boolean att_manager;
     @CreationTimestamp
     @Column(name = "created", nullable = false, updatable = false)
     private Date created;
@@ -48,7 +48,4 @@ public class User {
     private Date updated;
     @Column(name = "profile_message",length = 250, nullable = true)
     private String profileMessage;
-    // User가 작성한 모든 Post
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Post> posts;
 }
