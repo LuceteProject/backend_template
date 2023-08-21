@@ -90,11 +90,9 @@ public class CommentService {
     // Comment 엔티티를 CommentDTO로 변환하는 메소드
     private CommentDTO convertToDTO(Comment comment) {
         CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
-        if (comment.getPost() != null) {
-            commentDTO.setPost_id(comment.getPost().getId());
-            commentDTO.setUser_id(comment.getUser().getId());
-            commentDTO.setIs_deleted(comment.getIsDeleted());
-        }
+        commentDTO.setPost_id(comment.getPost().getId());
+        commentDTO.setUser_id(comment.getUser().getId());
+        commentDTO.setIs_deleted(comment.getIsDeleted());
         return commentDTO;
     }
 

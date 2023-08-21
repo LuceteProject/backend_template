@@ -16,7 +16,7 @@ public class UserDTO {
     private String password;
     private Integer semester;
     private Integer team_code;
-    private Integer permission;
+    private Integer permission_code;
     private Boolean att_manager;
     private Date created;
     private Date updated;

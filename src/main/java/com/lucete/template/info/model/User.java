@@ -36,8 +36,8 @@ public class User {
     private Integer semester;
     @Column(name = "team_code")
     private Integer teamCode;
-    @Column
-    private Integer permission;
+    @Column(name = "permission_code")
+    private Integer permissionCode;
     @Column
     private Boolean att_manager;
     @CreationTimestamp

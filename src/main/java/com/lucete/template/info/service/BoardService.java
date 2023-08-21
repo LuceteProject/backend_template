@@ -1,5 +1,6 @@
 package com.lucete.template.info.service;
 
+import com.lucete.template.info.DTO.AttendanceDTO;
 import com.lucete.template.info.DTO.BoardDTO;
 import com.lucete.template.info.DTO.PostDTO;
 import com.lucete.template.info.DTO.UserDTO;
@@ -62,6 +63,8 @@ public class BoardService {
         return boards.map(this::convertToDTO);
     }
     private BoardDTO convertToDTO(Board board) {
-        return modelMapper.map(board, BoardDTO.class);
+        BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
+        boardDTO.setPermission_code(board.getPermissionCode());
+        return boardDTO;
     }
 }

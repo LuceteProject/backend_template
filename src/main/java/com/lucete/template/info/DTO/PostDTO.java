@@ -12,7 +12,7 @@ public class PostDTO {
     private Integer team_code;
     private String title;
     private String content;
-    private Integer permission;
+    private Integer permission_code;
     private Boolean is_notice;
     private Date created;
     private Date updated;

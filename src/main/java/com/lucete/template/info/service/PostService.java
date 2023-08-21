@@ -83,6 +83,7 @@ public class PostService {
         PostDTO postDTO = modelMapper.map(post, PostDTO.class);
         postDTO.setUser_id(post.getUser().getId());
         postDTO.setBoard_id(post.getBoard().getId());
+        postDTO.setPermission_code(post.getPermissionCode());
         postDTO.setIs_notice(post.getIsNotice());
         postDTO.setTeam_code(post.getTeamCode());
         return postDTO;

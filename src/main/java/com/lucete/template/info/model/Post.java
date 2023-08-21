@@ -25,8 +25,8 @@ public class Post {
     private String title;
     @Column(columnDefinition = "TEXT")
     private String content;
-    @Column
-    private Integer permission;
+    @Column(name = "permission_code")
+    private Integer permissionCode;
     @Column(name = "is_notice")
     private Boolean isNotice;
     @CreationTimestamp

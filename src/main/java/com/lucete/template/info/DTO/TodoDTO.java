@@ -10,4 +10,5 @@ public class TodoDTO {
     private Long user_id;
     private String content;
     private Integer team_code;
+    private Boolean completed;
 }

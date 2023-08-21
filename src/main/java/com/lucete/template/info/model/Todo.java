@@ -22,4 +22,6 @@ public class Todo {
     private String content;
     @Column(name = "team_code")
     private Integer teamCode;
+    @Column
+    private Boolean completed;
 }
