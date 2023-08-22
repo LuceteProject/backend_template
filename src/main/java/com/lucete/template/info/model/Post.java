@@ -2,6 +2,7 @@ package com.lucete.template.info.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -28,6 +29,7 @@ public class Post {
     @Column(name = "permission_code")
     private Integer permissionCode;
     @Column(name = "is_notice")
+    @ColumnDefault("false")
     private Boolean isNotice;
     @CreationTimestamp
     @Column(name = "created", nullable = false, updatable = false)
