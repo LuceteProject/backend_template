@@ -2,6 +2,7 @@ package com.lucete.template.info.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Date;
 
@@ -23,5 +24,6 @@ public class Todo {
     @Column(name = "team_code")
     private Integer teamCode;
     @Column
+    @ColumnDefault("false")
     private Boolean completed;
 }

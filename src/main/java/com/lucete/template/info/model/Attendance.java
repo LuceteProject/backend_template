@@ -2,6 +2,7 @@ package com.lucete.template.info.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Date;
 
@@ -19,7 +20,8 @@ public class Attendance {
     @JoinColumn(name = "user_id")
     private User user;
     @Column
-    private int point;
+    @ColumnDefault("0")
+    private Integer point;
     @Column
     private Date date;
 }

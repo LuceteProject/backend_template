@@ -2,6 +2,7 @@ package com.lucete.template.info.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Date;
 
@@ -27,6 +28,7 @@ public class Schedule {
     @Column
     private Date end;
     @Column
+    @ColumnDefault("null")
     private Date alarm;
     @Column(name = "team_code")
     private Integer teamCode;

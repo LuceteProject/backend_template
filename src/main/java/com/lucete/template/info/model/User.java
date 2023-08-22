@@ -2,6 +2,7 @@ package com.lucete.template.info.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -31,7 +32,7 @@ public class User {
     private String email;
     @Column(length = 20, nullable = false)
     private String phone;
-    @Column(length = 10, nullable = false)
+    @Column(length = 20, nullable = false)
     private String password;
     @Column
     private Integer semester;
@@ -40,6 +41,7 @@ public class User {
     @Column(name = "permission_code")
     private Integer permissionCode;
     @Column
+    @ColumnDefault("false")
     private Boolean attManager;
     @CreationTimestamp
     @Column(name = "created", nullable = false, updatable = false)

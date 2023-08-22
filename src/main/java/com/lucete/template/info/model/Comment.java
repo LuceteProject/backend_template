@@ -3,6 +3,7 @@ package com.lucete.template.info.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -39,9 +40,11 @@ public class Comment {
     private Date updated;
 
     @Column
+    @ColumnDefault("null")
     private Long parent;
 
     @Column(name = "is_deleted", nullable = false)
+    @ColumnDefault("false")
     private Boolean isDeleted;
 
 }
