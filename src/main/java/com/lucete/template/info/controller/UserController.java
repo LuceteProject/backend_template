@@ -68,6 +68,7 @@ public class UserController {
     public ResponseEntity<List<UserInfoMapping>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
+
     @GetMapping("/me")
     public UserDTO getCurrentUser(OAuth2AuthenticationToken token) {
         OAuth2User googleUser = token.getPrincipal();

@@ -66,6 +66,13 @@ public class TodoService {
                 .collect(Collectors.toList());
     }
 
+    public List<TodoDTO> getTodosByTeamCode(Integer teamCode) {
+        List<Todo> todos = todoRepository.findByTeamCode(teamCode);
+        return todos.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     private TodoDTO convertToDTO(Todo todo) {
         TodoDTO todoDTO = modelMapper.map(todo, TodoDTO.class);
         todoDTO.setUserId(todo.getUser().getId());

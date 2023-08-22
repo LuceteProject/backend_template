@@ -23,7 +23,6 @@ public class TodoController {
 
     @PostMapping
     @Operation(summary = "새로운 할 일 생성", description = "새로운 할 일 정보를 생성합니다.")
-
     public TodoDTO createTodo(@RequestBody TodoDTO todoDTO) {
         return todoService.createTodo(todoDTO);
     }
@@ -35,15 +34,21 @@ public class TodoController {
     }
 
     @GetMapping("/userID/{userId}")
-    @Operation(summary = "특정 사용자의 모든 할 일 조회", description = "사용자 ID를 이용하여 해당 사용자의 모든 할 일 조회합니다.")
+    @Operation(summary = "특정 사용자의 모든 할 일 조회", description = "사용자 ID를 이용하여 해당 사용자의 모든 할 일을 조회합니다.")
     public ResponseEntity<List<TodoDTO>> getTodosByUserId(@Parameter(description = "할 일을 조회할 사용자의 ID") @PathVariable Long userId) {
         List<TodoDTO> todos = todoService.getTodosByUserId(userId);
         return ResponseEntity.ok(todos);
     }
 
+    @GetMapping("/teamCode/{teamCode}")
+    @Operation(summary = "특정 팀의 모든 할 일 조회", description = "팀 코드를 이용하여 해당 팀의 모든 할 일을 조회합니다.")
+    public ResponseEntity<List<TodoDTO>> getTodosByTeamCode(@Parameter(description = "할 일을 조회할 팀 코드") @PathVariable Integer teamCode) {
+        List<TodoDTO> todos = todoService.getTodosByTeamCode(teamCode);
+        return ResponseEntity.ok(todos);
+    }
+
     @PutMapping("/{todoId}")
     @Operation(summary = "할 일 정보 수정", description = "할 일 ID를 이용하여 기존 할 일 정보를 수정합니다.")
-
     public TodoDTO updateTodo(@PathVariable Long todoId, @RequestBody TodoDTO todoDTO) {
         return todoService.updateTodo(todoId, todoDTO);
     }
