@@ -1,11 +1,9 @@
 package com.lucete.template.info.service;
 
-import com.lucete.template.info.DTO.AttendanceDTO;
-import com.lucete.template.info.DTO.BoardDTO;
-import com.lucete.template.info.DTO.PostDTO;
-import com.lucete.template.info.DTO.UserDTO;
+import com.lucete.template.info.DTO.*;
 import com.lucete.template.info.config.ResourceNotFoundException;
 import com.lucete.template.info.model.Board;
+import com.lucete.template.info.model.Todo;
 import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.BoardRepository;
 import org.modelmapper.ModelMapper;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -58,9 +57,11 @@ public class BoardService {
                 .orElseThrow(() -> new ResourceNotFoundException("Board", "id", id));
         boardRepository.delete(board);
     }
-    public Page<BoardDTO> getAllBoards(Pageable pageable) {
-        Page<Board> boards = boardRepository.findAll(pageable);
-        return boards.map(this::convertToDTO);
+    public List<BoardDTO> getAllBoards(){
+        List<Board> boards = boardRepository.findAll();
+        return boards.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
     private BoardDTO convertToDTO(Board board) {
         BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);

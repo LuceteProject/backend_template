@@ -50,11 +50,7 @@ public class BoardController {
         return ResponseEntity.ok().build();
     }
     @GetMapping
-    @Operation(summary = "모든 게시판 정보 조회", description = "페이징 기능을 이용하여 모든 게시판 정보를 조회합니다.")
-    public Page<BoardDTO> getAllPosts(@RequestParam(required = false, defaultValue = "0") int page,
-                                     @RequestParam(required = false, defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return boardService.getAllBoards(pageable);
-    }
+    @Operation(summary = "모든 게시판 정보 조회")
+    public ResponseEntity<List<BoardDTO>> getAllBoards() { return ResponseEntity.ok(boardService.getAllBoards()); }
 
 }
