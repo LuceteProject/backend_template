@@ -64,6 +64,9 @@ public class UserService {
 
     private UserInfoMapping convertToUserInfoMapping(User user) {
         return new UserInfoMapping() {
+
+            @Override
+            public Long getId() { return user.getId(); }
             @Override
             public String getName() {
                 return user.getName();
