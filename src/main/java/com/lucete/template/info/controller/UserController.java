@@ -3,6 +3,7 @@ package com.lucete.template.info.controller;
 import com.lucete.template.info.DTO.UserDTO;
 import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.UserRepository;
+import com.lucete.template.info.repository.mapping.UserInfoMapping;
 import com.lucete.template.info.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -63,12 +64,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @GetMapping
-    @Operation(summary = "모든 사용자 정보 조회", description = "페이징 기능을 이용하여 모든 사용자 정보를 조회합니다.")
-
-    public Page<UserDTO> getAllUsers(@RequestParam(required = false, defaultValue = "0") int page,
-                                     @RequestParam(required = false, defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return userService.getAllUsers(pageable);
+    @Operation(summary = "모든 사용자 정보 조회")
+    public ResponseEntity<List<UserInfoMapping>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
     @GetMapping("/me")
     public UserDTO getCurrentUser(OAuth2AuthenticationToken token) {

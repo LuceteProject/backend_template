@@ -54,7 +54,7 @@ public class BoardController {
     public Page<BoardDTO> getAllPosts(@RequestParam(required = false, defaultValue = "0") int page,
                                      @RequestParam(required = false, defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return boardService.getAllPosts(pageable);
+        return boardService.getAllBoards(pageable);
     }
 
 }

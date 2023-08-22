@@ -3,9 +3,9 @@ package com.lucete.template.info.service;
 import com.lucete.template.info.DTO.TodoDTO;
 import com.lucete.template.info.DTO.UserDTO;
 import com.lucete.template.info.config.ResourceNotFoundException;
-import com.lucete.template.info.model.Todo;
 import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.UserRepository;
+import com.lucete.template.info.repository.mapping.UserInfoMapping;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,7 +24,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
-    @Autowired
     public UserService(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
@@ -55,10 +55,52 @@ public class UserService {
                 () -> new ResourceNotFoundException("User", "id", id));
         userRepository.delete(user);
     }
-    public Page<UserDTO> getAllUsers(Pageable pageable) {
-        Page<User> users = userRepository.findAll(pageable);
-        return users.map(this::convertToDTO);
+    public List<UserInfoMapping> getAllUsers() {
+        List<User> users = userRepository.findAll(); // User 엔티티 리스트 가져오기
+        return users.stream()
+                .map(this::convertToUserInfoMapping) // User를 UserInfoMapping으로 변환
+                .collect(Collectors.toList());
     }
+
+    private UserInfoMapping convertToUserInfoMapping(User user) {
+        return new UserInfoMapping() {
+            @Override
+            public String getName() {
+                return user.getName();
+            }
+
+            @Override
+            public String getEmail() {
+                return user.getEmail();
+            }
+
+            @Override
+            public String getPhone() {
+                return user.getPhone();
+            }
+
+            @Override
+            public Integer getSemester() {
+                return user.getSemester();
+            }
+
+            @Override
+            public Integer getTeamCode() {
+                return user.getTeamCode();
+            }
+
+            @Override
+            public String getProfileMessage() {
+                return user.getProfileMessage();
+            }
+
+            @Override
+            public String getProfileImage() {
+                return user.getProfileImage();
+            }
+        };
+    }
+
 
     private UserDTO convertToDTO(User user) {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
