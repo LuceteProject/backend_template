@@ -64,7 +64,7 @@ public class BoardService {
     }
     private BoardDTO convertToDTO(Board board) {
         BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
-        boardDTO.setPermission_code(board.getPermissionCode());
+        boardDTO.setPermissionCode(board.getPermissionCode());
         return boardDTO;
     }
 }

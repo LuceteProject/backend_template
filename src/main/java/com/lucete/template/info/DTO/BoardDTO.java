@@ -10,5 +10,5 @@ import java.util.List;
 public class BoardDTO {
     private Long id;
     private String name;
-    private Integer permission_code;
+    private Integer permissionCode;
 }

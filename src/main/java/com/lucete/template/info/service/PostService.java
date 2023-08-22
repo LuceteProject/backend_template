@@ -39,10 +39,10 @@ public class PostService {
     }
 
     public PostDTO createPost(PostDTO postDto) {
-        User user = userRepository.findById(postDto.getUser_id())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + postDto.getUser_id()));
-        Board board = boardRepository.findById(postDto.getBoard_id())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid board_id: " + postDto.getBoard_id()));
+        User user = userRepository.findById(postDto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + postDto.getUserId()));
+        Board board = boardRepository.findById(postDto.getBoardId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid board_id: " + postDto.getBoardId()));
 
         Post post = modelMapper.map(postDto, Post.class);
         post.setUser(user);
@@ -81,11 +81,11 @@ public class PostService {
 
     private PostDTO convertToDTO(Post post) {
         PostDTO postDTO = modelMapper.map(post, PostDTO.class);
-        postDTO.setUser_id(post.getUser().getId());
-        postDTO.setBoard_id(post.getBoard().getId());
-        postDTO.setPermission_code(post.getPermissionCode());
-        postDTO.setIs_notice(post.getIsNotice());
-        postDTO.setTeam_code(post.getTeamCode());
+        postDTO.setUserId(post.getUser().getId());
+        postDTO.setBoardId(post.getBoard().getId());
+        postDTO.setPermissionCode(post.getPermissionCode());
+        postDTO.setIsNotice(post.getIsNotice());
+        postDTO.setTeamCode(post.getTeamCode());
         return postDTO;
     }
 

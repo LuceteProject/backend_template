@@ -28,8 +28,8 @@ public class AttendanceService {
     }
 
     public AttendanceDTO createAttendance(AttendanceDTO attendanceDTO) {
-        User user = userRepository.findById(attendanceDTO.getUser_id())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + attendanceDTO.getUser_id()));
+        User user = userRepository.findById(attendanceDTO.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + attendanceDTO.getUserId()));
         Attendance attendance = modelMapper.map(attendanceDTO, Attendance.class);
         attendance.setUser(user);
         attendance = attendanceRepository.save(attendance);
@@ -69,7 +69,7 @@ public class AttendanceService {
 
     private AttendanceDTO convertToDTO(Attendance attendance) {
         AttendanceDTO attendanceDTO = modelMapper.map(attendance, AttendanceDTO.class);
-        attendanceDTO.setUser_id(attendance.getUser().getId());
+        attendanceDTO.setUserId(attendance.getUser().getId());
         return attendanceDTO;
     }
 }

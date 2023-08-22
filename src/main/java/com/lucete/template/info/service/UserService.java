@@ -107,11 +107,12 @@ public class UserService {
 
     private UserDTO convertToDTO(User user) {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        userDTO.setGoogle_id(user.getGoogleId());
-        userDTO.setNaver_id(user.getNaverId());
-        userDTO.setTeam_code(user.getTeamCode());
-        userDTO.setPermission_code(user.getPermissionCode());
-        userDTO.setProfile_message(user.getProfileMessage());
+        userDTO.setGoogleId(user.getGoogleId());
+        userDTO.setNaverId(user.getNaverId());
+        userDTO.setTeamCode(user.getTeamCode());
+        userDTO.setAttManager(user.getAttManager());
+        userDTO.setPermissionCode(user.getPermissionCode());
+        userDTO.setProfileMessage(user.getProfileMessage());
         return userDTO;
     }
     public UserDTO createGoogleUser(OAuth2User googleUser) {

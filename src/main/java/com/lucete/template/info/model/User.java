@@ -40,7 +40,7 @@ public class User {
     @Column(name = "permission_code")
     private Integer permissionCode;
     @Column
-    private Boolean att_manager;
+    private Boolean attManager;
     @CreationTimestamp
     @Column(name = "created", nullable = false, updatable = false)
     private Date created;

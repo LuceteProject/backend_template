@@ -9,13 +9,13 @@ import java.util.Date;
 @Setter
 public class CommentDTO {
     private Long id;
-    private Long post_id;
-    private Long user_id;
+    private Long postId;
+    private Long userId;
     private String content;
     private Date created;
     private Date updated;
     private Long parent;
-    private Boolean is_deleted;
+    private Boolean isDeleted;
 
     /* Getters and Setters */
 }
