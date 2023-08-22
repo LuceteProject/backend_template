@@ -29,8 +29,8 @@ public class ScheduleService {
     }
 
     public ScheduleDTO createSchedule(ScheduleDTO scheduleDTO) {
-        User user = userRepository.findById(scheduleDTO.getUser_id())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + scheduleDTO.getUser_id()));
+        User user = userRepository.findById(scheduleDTO.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + scheduleDTO.getUserId()));
         Schedule schedule = modelMapper.map(scheduleDTO, Schedule.class);
         schedule.setUser(user);
         schedule = scheduleRepository.save(schedule);
@@ -76,8 +76,8 @@ public class ScheduleService {
     }
     private ScheduleDTO convertToDTO(Schedule schedule) {
         ScheduleDTO scheduleDTO = modelMapper.map(schedule, ScheduleDTO.class);
-        scheduleDTO.setUser_id(schedule.getUser().getId());
-        scheduleDTO.setTeam_code(schedule.getTeamCode());
+        scheduleDTO.setUserId(schedule.getUser().getId());
+        scheduleDTO.setTeamCode(schedule.getTeamCode());
         return scheduleDTO;
     }
 }

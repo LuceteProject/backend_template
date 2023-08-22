@@ -31,10 +31,10 @@ public class CommentService {
     }
 
     public CommentDTO createComment(CommentDTO commentDTO) {
-        User user = userRepository.findById(commentDTO.getUser_id())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + commentDTO.getUser_id()));
-        Post post = postRepository.findById(commentDTO.getPost_id())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid post_id: " + commentDTO.getPost_id()));
+        User user = userRepository.findById(commentDTO.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + commentDTO.getUserId()));
+        Post post = postRepository.findById(commentDTO.getPostId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid post_id: " + commentDTO.getPostId()));
         Comment comment = modelMapper.map(commentDTO, Comment.class);
         comment.setUser(user);
         comment.setPost(post);
@@ -90,9 +90,9 @@ public class CommentService {
     // Comment 엔티티를 CommentDTO로 변환하는 메소드
     private CommentDTO convertToDTO(Comment comment) {
         CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
-        commentDTO.setPost_id(comment.getPost().getId());
-        commentDTO.setUser_id(comment.getUser().getId());
-        commentDTO.setIs_deleted(comment.getIsDeleted());
+        commentDTO.setPostId(comment.getPost().getId());
+        commentDTO.setUserId(comment.getUser().getId());
+        commentDTO.setIsDeleted(comment.getIsDeleted());
         return commentDTO;
     }
 

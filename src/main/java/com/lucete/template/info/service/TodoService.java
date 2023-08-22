@@ -27,8 +27,8 @@ public class TodoService {
     }
 
     public TodoDTO createTodo(TodoDTO todoDTO) {
-        User user = userRepository.findById(todoDTO.getUser_id())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + todoDTO.getUser_id()));
+        User user = userRepository.findById(todoDTO.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user_id: " + todoDTO.getUserId()));
         Todo todo = modelMapper.map(todoDTO, Todo.class);
         todo.setUser(user);
         todo = todoRepository.save(todo);
@@ -68,8 +68,8 @@ public class TodoService {
 
     private TodoDTO convertToDTO(Todo todo) {
         TodoDTO todoDTO = modelMapper.map(todo, TodoDTO.class);
-        todoDTO.setUser_id(todo.getUser().getId());
-        todoDTO.setTeam_code(todo.getTeamCode());
+        todoDTO.setUserId(todo.getUser().getId());
+        todoDTO.setTeamCode(todo.getTeamCode());
         return todoDTO;
     }
 }

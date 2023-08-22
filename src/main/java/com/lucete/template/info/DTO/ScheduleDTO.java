@@ -8,11 +8,11 @@ import java.util.Date;
 @Setter
 public class ScheduleDTO {
     private Long id;
-    private Long user_id;
+    private Long userId;
     private String title;
     private String content;
     private Date start;
     private Date end;
     private Date alarm;
-    private Integer team_code;
+    private Integer teamCode;
 }

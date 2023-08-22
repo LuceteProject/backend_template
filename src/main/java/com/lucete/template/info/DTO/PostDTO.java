@@ -9,15 +9,15 @@ import java.util.Date;
 @Setter
 public class PostDTO {
     private Long id;
-    private Integer team_code;
+    private Integer teamCode;
     private String title;
     private String content;
-    private Integer permission_code;
-    private Boolean is_notice;
+    private Integer permissionCode;
+    private Boolean isNotice;
     private Date created;
     private Date updated;
-    private Long board_id;
-    private Long user_id;
+    private Long boardId;
+    private Long userId;
 
     // Getters and Setters
 }

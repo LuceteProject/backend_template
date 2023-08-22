@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class TodoDTO {
     private Long id;
-    private Long user_id;
+    private Long userId;
     private String content;
-    private Integer team_code;
+    private Integer teamCode;
     private Boolean completed;
 }

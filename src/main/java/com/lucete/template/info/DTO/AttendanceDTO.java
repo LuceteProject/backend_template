@@ -9,7 +9,7 @@ import java.util.Date;
 @Setter
 public class AttendanceDTO {
     private Long id;
-    private Long user_id;
+    private Long userId;
     private int point;
     private Date date;
 }
