@@ -58,7 +58,7 @@ public class BoardService {
                 .orElseThrow(() -> new ResourceNotFoundException("Board", "id", id));
         boardRepository.delete(board);
     }
-    public Page<BoardDTO> getAllPosts(Pageable pageable) {
+    public Page<BoardDTO> getAllBoards(Pageable pageable) {
         Page<Board> boards = boardRepository.findAll(pageable);
         return boards.map(this::convertToDTO);
     }

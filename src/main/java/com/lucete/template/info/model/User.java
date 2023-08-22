@@ -16,6 +16,7 @@ import java.util.List;
 //생성자 어노테이션
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
