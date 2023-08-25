@@ -1,3 +1,7 @@
+naver:
+  client:
+    id: KgbpyZjpXXLi7s7sHfDP
+    secret: Vcwzr4h2ya
 server:
   port: 8080
 springdoc:
@@ -11,16 +15,16 @@ springdoc:
 spring:
   datasource:
     #localhost
-    #driver-class-name: com.mysql.cj.jdbc.Driver
-    #url: jdbc:mysql://localhost:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
-    #username: root
-    #password: ""
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
+    username: root
+    password: "tkdlvjwm12@"
 
     #EC2
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://lucete-db:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
-    username: root
-    password: "lucete1347"
+    #driver-class-name: org.mariadb.jdbc.Driver
+    #url: jdbc:mariadb://lucete-db:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
+    #username: root
+    #password: "lucete1347"
   jpa:
     hibernate:
       ddl-auto: validate
@@ -29,8 +33,8 @@ spring:
       client:
         registration:
           google:
-            client-id: 719668423695-4jmaf2s2t32pef24b4bm3vhmrd15to33.apps.googleusercontent.com
-            client-secret: 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
+            client-id: 1026639716649-u2ip45kma4ilpl9autialjjccbrq6psr.apps.googleusercontent.com
+            client-secret: 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
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope:
               - openid
@@ -40,7 +44,7 @@ spring:
             client-id: KgbpyZjpXXLi7s7sHfDP
             client-secret: Vcwzr4h2ya
             client-name: Naver
-            redirect_uri: "http://localhost:3000"
+            redirect_uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
             scope:
               - name
