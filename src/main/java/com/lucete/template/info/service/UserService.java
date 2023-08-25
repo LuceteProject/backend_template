@@ -36,6 +36,12 @@ public class UserService {
         return convertToDTO(user);
     }
 
+    public UserDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new ResourceNotFoundException("User", "email", email));
+        return convertToDTO(user);
+    }
+
     public UserDTO createUser(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         user = userRepository.save(user);
