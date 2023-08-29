@@ -18,7 +18,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
     username: root
-    password: "0000"
+    password: ""
 
     #EC2
     #driver-class-name: org.mariadb.jdbc.Driver
@@ -27,7 +27,7 @@ spring:
     #password: "lucete1347"
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
   security:
     oauth2:
       client:

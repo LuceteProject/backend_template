@@ -4,6 +4,7 @@ import com.lucete.template.info.DTO.UserDTO;
 import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.UserRepository;
 import com.lucete.template.info.repository.mapping.UserInfoMapping;
+import com.lucete.template.info.repository.mapping.UserProfileMapping;
 import com.lucete.template.info.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -67,6 +68,14 @@ public class UserController {
     @Operation(summary = "모든 사용자 정보 조회")
     public ResponseEntity<List<UserInfoMapping>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @GetMapping("/profile/{userId}")
+    @Operation(summary = "특정 사용자 기수, 팀, 이름 조회", description = "사용자 ID를 이용하여 사용자 프로필 정보를 조회합니다.")
+
+    public ResponseEntity<UserProfileMapping> getUserProfile(@PathVariable Long userId) {
+        UserProfileMapping user = userService.getUserProfile(userId);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/me")
