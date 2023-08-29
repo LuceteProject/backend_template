@@ -6,6 +6,7 @@ import com.lucete.template.info.config.ResourceNotFoundException;
 import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.UserRepository;
 import com.lucete.template.info.repository.mapping.UserInfoMapping;
+import com.lucete.template.info.repository.mapping.UserProfileMapping;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -68,6 +69,12 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public UserProfileMapping getUserProfile(Long id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User", "id", id));
+        return convertToUserProfileMapping(user);
+    }
+
     private UserInfoMapping convertToUserInfoMapping(User user) {
         return new UserInfoMapping() {
 
@@ -94,9 +101,7 @@ public class UserService {
             }
 
             @Override
-            public Integer getTeamCode() {
-                return user.getTeamCode();
-            }
+            public Integer getTeamCode() { return user.getTeamCode(); }
 
             @Override
             public String getProfileMessage() {
@@ -107,6 +112,23 @@ public class UserService {
             public String getProfileImage() {
                 return user.getProfileImage();
             }
+        };
+    }
+
+    private UserProfileMapping convertToUserProfileMapping(User user){
+        return new UserProfileMapping() {
+
+            @Override
+            public Long getId() { return user.getId(); }
+
+            @Override
+            public String getName() { return user.getName(); }
+
+            @Override
+            public Integer getTeamCode() { return user.getTeamCode(); }
+
+            @Override
+            public Integer getSemester() { return user.getSemester(); }
         };
     }
 
