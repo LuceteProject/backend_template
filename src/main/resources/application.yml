@@ -30,19 +30,19 @@ spring:
       max-file-size: 10MB
   datasource:
     #localhost
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
-    username: root
-    password: "0000"
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://localhost:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
+    #username: root
+    #password: ""
 
     #EC2
-    #driver-class-name: org.mariadb.jdbc.Driver
-    #url: jdbc:mariadb://lucete-db:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
-    #username: root
-    #password: "lucete1347"
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://lucete-db:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8
+    username: root
+    password: "lucete1347"
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
   security:
     oauth2:
       client:
