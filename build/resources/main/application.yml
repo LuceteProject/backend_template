@@ -4,6 +4,7 @@ naver:
     secret: Vcwzr4h2ya
 server:
   port: 8080
+  forward-headers-strategy: framework
 springdoc:
   swagger-ui:
     disable-swagger-default-url: true
