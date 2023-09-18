@@ -1,0 +1,71 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Set JDK
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    # Set application.yml  
+    - name: Set YML
+      run: echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > src/main/resources/application.yml
+      
+    # Spring Boot 어플리케이션 Build
+    - name: Spring Boot Build
+      run: ./gradlew clean build -x test
+    
+    # Docker 이미지 Build
+    - name: Docker image build
+      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/lucete .
+    
+    # DockerHub Login
+    - name: Docker login 
+      uses: docker/login-action@v2
+      with: 
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # Docker Hub push
+    - name: Docker Hub push
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/lucete
+
+    # AWS Connect
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ec2-user
+        key: ${{ secrets.SSH_PEM_KEY }}
+        envs: GITHUB_SHA
+        script: |
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/lucete
+          docker stop lucete-back
+          docker rm lucete-back
+          docker run --name lucete-back -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/lucete
+          docker network connect lucete-network lucete-back
+          docker rm $(docker ps --filter 'status=exited' -a -q)
+          docker image prune -a -f
