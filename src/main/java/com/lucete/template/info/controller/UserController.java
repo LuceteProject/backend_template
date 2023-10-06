@@ -6,6 +6,7 @@ import com.lucete.template.info.repository.UserRepository;
 import com.lucete.template.info.repository.mapping.UserInfoMapping;
 import com.lucete.template.info.repository.mapping.UserProfileMapping;
 import com.lucete.template.info.service.UserService;
+import com.lucete.template.info.utils.UserLoginRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
@@ -87,8 +88,11 @@ public class UserController {
     }
     @PostMapping("/login")
     @Operation(summary = "사용자 로그인", description = "이메일과 비밀번호로 로그인합니다.")
-    public ResponseEntity<?> login(@RequestBody String email, @RequestBody String password) {
+    public ResponseEntity<?> login(@RequestBody UserLoginRequest userLoginRequest) {
         try {
+            String email = userLoginRequest.getEmail();
+            String password = userLoginRequest.getPassword();
+
             String token = userService.login(email, password);
             UserDTO user = userService.getUserByEmail(email);
 
