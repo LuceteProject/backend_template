@@ -62,13 +62,13 @@ jobs:
         key: ${{ secrets.EC2_KEY }}
         envs: GITHUB_SHA
         script: |
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
-          docker stop ${{ secrets.CONTAINER_NAME }}
-          docker rm ${{ secrets.CONTAINER_NAME }}
-          docker run --name ${{ secrets.CONTAINER_NAME }} -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }} \
-          -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
-          -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} \
-          -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}
-          docker network connect ${{ secrets.NETWORK_NAME }} ${{ secrets.CONTAINER_NAME }}
+          docker pull aerae/lucete
+          docker stop lucete-back
+          docker rm lucete-back
+          docker run --name lucete-back -d -p 8080:8080 aerae/lucete \
+          -e SPRING_DATASOURCE_URL=jdbc:mariadb://lucete-db:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8 \
+          -e SPRING_DATASOURCE_USERNAME=root \
+          -e SPRING_DATASOURCE_PASSWORD=lucete1347
+          docker network connect lucete-network lucete-back
           docker rm $(docker ps --filter 'status=exited' -a -q)
           docker image prune -a -f
