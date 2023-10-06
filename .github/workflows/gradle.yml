@@ -32,7 +32,7 @@ jobs:
 
     # Set application.yml  
     - name: Set YML
-      run: echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > src/main/resources/application.yml
+      run: echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application.yml
       
     # Spring Boot 어플리케이션 Build
     - name: Spring Boot Build
