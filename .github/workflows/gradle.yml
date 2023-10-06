@@ -31,11 +31,13 @@ jobs:
         distribution: 'temurin'
 
     # Set application.yml  
-    - name: Set YML
+    - name: Set YML & secret.key
       run: |
         cd ./src/main/resources
         touch ./application.yml
         echo "${{ secrets.APPLICATION_YML }}" > ./application.yml
+        touch ./secret.key
+        echo "${{ secrets.RSA_KEY }}" > ./secret.key
       shell: bash
       
     # Spring Boot 어플리케이션 Build
