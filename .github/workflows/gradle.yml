@@ -62,9 +62,9 @@ jobs:
         key: ${{ secrets.EC2_KEY }}
         envs: GITHUB_SHA
         script: |
-          docker pull aerae/lucete
-          docker stop lucete-back
-          docker rm lucete-back
-          docker run --name lucete-back -d -p 8080:8080 aerae/lucete
-          docker network connect lucete-network lucete-back
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+          docker stop ${{ secrets.CONTAINER_NAME }}
+          docker rm ${{ secrets.CONTAINER_NAME }}
+          docker run --name ${{ secrets.CONTAINER_NAME }} -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+          docker network connect ${{ secrets.NETWORK_NAME }} ${{ secrets.CONTAINER_NAME }}
           docker image prune -a -f
