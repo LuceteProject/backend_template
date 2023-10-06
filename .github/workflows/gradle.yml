@@ -65,10 +65,6 @@ jobs:
           docker pull aerae/lucete
           docker stop lucete-back
           docker rm lucete-back
-          docker run --name lucete-back -d -p 8080:8080 aerae/lucete \
-          -e SPRING_DATASOURCE_URL=jdbc:mariadb://lucete-db:3306/lucete?createDatabaseIfNotExist=True&serverTimeZone=UTC&CharacterEncoding=UTF-8 \
-          -e SPRING_DATASOURCE_USERNAME=root \
-          -e SPRING_DATASOURCE_PASSWORD=lucete1347
+          docker run --name lucete-back -d -p 8080:8080 aerae/lucete
           docker network connect lucete-network lucete-back
-          docker rm $(docker ps --filter 'status=exited' -a -q)
           docker image prune -a -f
