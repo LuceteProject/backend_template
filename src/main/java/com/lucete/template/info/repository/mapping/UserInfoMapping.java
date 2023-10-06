@@ -9,4 +9,5 @@ public interface UserInfoMapping {
     Integer getTeamCode();
     String getProfileMessage();
     String getProfileImage();
+    Integer getPermissionCode();
 }

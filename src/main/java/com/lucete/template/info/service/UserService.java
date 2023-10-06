@@ -141,6 +141,9 @@ public class UserService {
             public String getProfileImage() {
                 return user.getProfileImage();
             }
+
+            @Override
+            public Integer getPermissionCode() { return user.getPermissionCode();}
         };
     }
 
