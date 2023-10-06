@@ -71,4 +71,5 @@ jobs:
           docker rm ${{ secrets.CONTAINER_NAME }}
           docker run --name ${{ secrets.CONTAINER_NAME }} -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
           docker network connect ${{ secrets.NETWORK_NAME }} ${{ secrets.CONTAINER_NAME }}
+          docker network inspect ${{ secrets.NETWORK_NAME }}
           docker image prune -a -f
