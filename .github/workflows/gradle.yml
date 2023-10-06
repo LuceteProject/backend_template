@@ -65,6 +65,6 @@ jobs:
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
           docker stop ${{ secrets.CONTAINER_NAME }}
           docker rm ${{ secrets.CONTAINER_NAME }}
-          docker run --name ${{ secrets.CONTAINER_NAME }} -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+          docker run --name ${{ secrets.CONTAINER_NAME }} -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
           docker network connect ${{ secrets.NETWORK_NAME }} ${{ secrets.CONTAINER_NAME }}
           docker image prune -a -f
