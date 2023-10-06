@@ -32,7 +32,11 @@ jobs:
 
     # Set application.yml  
     - name: Set YML
-      run: echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application.yml
+      run: |
+        cd ./src/main/resources
+        touch ./application.yml
+        echo "${{ secrets.APPLICATION_YML }}" > ./application.yml
+      shell: bash
       
     # Spring Boot 어플리케이션 Build
     - name: Spring Boot Build
