@@ -7,6 +7,7 @@ import com.lucete.template.info.model.User;
 import com.lucete.template.info.repository.UserRepository;
 import com.lucete.template.info.repository.mapping.UserInfoMapping;
 import com.lucete.template.info.repository.mapping.UserProfileMapping;
+import com.lucete.template.info.utils.JwtUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,7 +26,28 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private HashMap<String, String> passwordMap = new HashMap<>(); // 비밀번호를 저장할 해시맵
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    public String login(String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new RuntimeException("User does not exist"));
+
+        if (!password.equals(user.getPassword())) { // 실제로는 해시된 비밀번호를 비교해야 함
+            throw new RuntimeException("Incorrect password");
+        }
+
+        return jwtUtil.generateToken(email);
+    }
+    public boolean validateUserByToken(String token) {
+        String email = jwtUtil.validateToken(token);
+        if (email == null) {
+            return false;
+        }
+        return userRepository.findByEmail(email).isPresent();
+    }
     public UserService(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
@@ -44,8 +67,14 @@ public class UserService {
     }
 
     public UserDTO createUser(UserDTO userDTO) {
+        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
+            throw new RuntimeException("User already exists");
+        }
+        passwordMap.put(userDTO.getEmail(), userDTO.getPassword());
+
         User user = modelMapper.map(userDTO, User.class);
         user = userRepository.save(user);
+
         return convertToDTO(user);
     }
 
