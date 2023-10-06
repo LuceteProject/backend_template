@@ -87,7 +87,7 @@ public class UserController {
     }
     @PostMapping("/login")
     @Operation(summary = "사용자 로그인", description = "이메일과 비밀번호로 로그인합니다.")
-    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<?> login(@RequestBody String email, @RequestBody String password) {
         try {
             String token = userService.login(email, password);
             UserDTO user = userService.getUserByEmail(email);
@@ -100,7 +100,7 @@ public class UserController {
     }
     @PostMapping("/validate-token")
     @Operation(summary = "토큰 검증", description = "토큰의 유효성과 사용자 존재 여부를 검증합니다.")
-    public ResponseEntity<?> validateToken(@RequestParam String token) {
+    public ResponseEntity<?> validateToken(@RequestBody String token) {
         boolean isValid = userService.validateUserByToken(token);
         if (isValid) {
             return new ResponseEntity<>("Token is valid", HttpStatus.OK);
