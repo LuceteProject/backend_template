@@ -55,17 +55,17 @@ jobs:
 
     # AWS Connect
     - name: Deploy
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v0.1.6
       with:
         host: ${{ secrets.EC2_HOST }}
-        username: ec2-user
-        key: ${{ secrets.SSH_PEM_KEY }}
+        username: ubuntu
+        key: ${{ secrets.EC2_KEY }}
         envs: GITHUB_SHA
         script: |
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/lucete
-          docker stop lucete-back
-          docker rm lucete-back
-          docker run --name lucete-back -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/lucete
-          docker network connect lucete-network lucete-back
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+          docker stop ${{ secrets.CONTAINER_NAME }}
+          docker rm ${{ secrets.CONTAINER_NAME }}
+          docker run --name ${{ secrets.CONTAINER_NAME }} -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+          docker network connect ${{ secrets.NETWORK_NAME }} ${{ secrets.CONTAINER_NAME }}
           docker rm $(docker ps --filter 'status=exited' -a -q)
           docker image prune -a -f
